@@ -65,6 +65,12 @@
 		private function playerMoveTo(px:Number, py:Number):void {
 			_vcastr3.playerMoveTo(px, py);
 		}
+		private function fullScreen():void {
+			_vcastr3.fullScreen();
+		}
+		private function exitFullScreen():void {
+			_vcastr3.exitFullScreen();
+		}
 		public function addCallBack():void {
 			 ExternalInterface.addCallback("play", play);
 			 ExternalInterface.addCallback("pause", pause);
@@ -77,6 +83,8 @@
 			 ExternalInterface.addCallback("volumeTo", volumeTo);
 			 ExternalInterface.addCallback("playerSizeTo", playerSizeTo);
 			 ExternalInterface.addCallback("playerMoveTo", playerMoveTo);
+			 ExternalInterface.addCallback("fullScreen", fullScreen);
+			 ExternalInterface.addCallback("exitFullScreen", exitFullScreen);			 
 		}
 	}	
 }

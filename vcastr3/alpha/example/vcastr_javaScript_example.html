@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>Vcastr - JavaScript Example</title>
+<script language="JavaScript">
+     function vcastrEvent(type,state,playHeadTime,loadPersent) {
+         document.forms["form1"].output.value = "\ntype:"+type+", state:"+state+", playHeadTime:"+playHeadTime+", loadPersent:"+loadPersent +document.forms["form1"].output.value;
+     }
+     function getVcastr() {
+         if (navigator.appName.indexOf("Microsoft") != -1) {
+             return window["vcastr3"];
+         } else {
+             return document["vcastr3"];
+         }
+     }
+ </script>
+
+</head>
+<body>
+<object type="application/x-shockwave-flash"
+ data="vcastr3.swf?xml=<vcastr>
+	<plugIns>
+		<plugIn>
+			<url>javaScriptPlugIn.swf</url>
+		</plugIn>
+	</plugIns>
+	<item>
+		<source>http://vcastr.ruochi.com/video/happy_feet.flv</source>
+	</item>
+</vcastr>"
+ width="650" height="500" id="vcastr3">
+ <param name="movie" value="vcastr3.swf?xml=<vcastr>
+	<plugIns>
+		<plugIn>
+			<url>javaScriptPlugIn.swf</url>
+		</plugIn>
+	</plugIns>
+	<item>
+		<source>http://vcastr.ruochi.com/video/happy_feet.flv</source>
+	</item>
+</vcastr>" />
+ <param name="allowFullScreen" value="true" /> 
+</object>
+<form name="form1">
+	
+	<input type="button" value="playPasue" onclick="getVcastr().playPause();" />
+	<input type="button" value="play" onclick="getVcastr().play();" />
+	<input type="button" value="pause" onclick="getVcastr().pause();" />
+	<input type="button" value="stop" onclick="getVcastr().stop();" />
+	<input type="button" value="ff" onclick="getVcastr().ff();" />
+	<input type="button" value="rew" onclick="getVcastr().rew();" />
+	<input type="button" value="next" onclick="getVcastr().next();" />
+	<input type="button" value="prev" onclick="getVcastr().prev();" />
+	<input type="button" value="volumeTo" onclick="getVcastr().volumeTo(this.form.volume.value);" /><input type="text" name="volume" value="0.2" /><br />
+	<input type="button" value="playerSizeTo" onclick="getVcastr().playerSizeTo(this.form.px.value,this.form.py.value);" /><input type="text" name="px" value="50" /><input type="text" name="py" value="20" /><br />
+	<input type="button" value="playerMoveTo" onclick="getVcastr().playerMoveTo(this.form.w.value,this.form.h.value);" /><input type="text" name="w" value="100" /><input type="text" name="h" value="100" />
+	<textarea width="100%" cols="60" rows="20" name="output" readonly="true"></textarea>
+</form>
+
+</body>
+</html>
