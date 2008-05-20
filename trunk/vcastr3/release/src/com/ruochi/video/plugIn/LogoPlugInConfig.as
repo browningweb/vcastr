@@ -10,19 +10,6 @@
 		public static var logoClipAlpha:Number = 1;
 		public static var logoClipMargin:Margin = new Margin(10, 10, null, null);
 		public static var url:String;
-		/*public static function set logoClipMargin(m:Margin):void {
-			var array:Array = str.split(" ");
-			_logoClipMargin = new Margin(array[0], array[1], array[2], array[3]);
-		}
-		public static function get logoClipMargin():Margin {
-			return _logoClipMargin;
-		}
-		public static function get logoTextMargin():Margin {
-			return _logoTextMargin;
-		}
-		public static function set logoTextMargin(m:Margin):void {
-			_logoTextMargin = m;
-		}*/
 		public static function set textMargin(s:String) {
 			logoTextMargin = new Margin(s);
 		}

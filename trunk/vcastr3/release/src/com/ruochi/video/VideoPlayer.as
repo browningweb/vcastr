@@ -152,6 +152,8 @@
 			setState(VideoEvent.PAUSED);
 		}
 		public function stop():void {
+			pause();
+			seek(0);
 			setState(VideoEvent.STOP);
 		}
 		public function close():void {
