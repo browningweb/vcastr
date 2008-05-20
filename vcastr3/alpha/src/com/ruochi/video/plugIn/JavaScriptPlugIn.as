@@ -24,7 +24,6 @@
 			_vcastr3.addEventListener(VideoEvent.INIT, onVideoEvent, false, 0, true);
 			_vcastr3.addEventListener(VideoEvent.READY, onVideoEvent, false, 0, true);
 			_vcastr3.addEventListener(VideoEvent.PLAYHEAD_UPDATE, onVideoEvent, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.PROGRESS, onVideoEvent, false, 0, true);
 			_vcastr3.addEventListener(VideoEvent.START_BUFFERING, onVideoEvent, false, 0, true);
 			_vcastr3.addEventListener(VideoEvent.STOP_BUFFERING, onVideoEvent, false, 0, true);
 			_vcastr3.addEventListener(VideoEvent.STOP, onVideoEvent, false, 0, true);			
@@ -65,11 +64,8 @@
 		private function playerMoveTo(px:Number, py:Number):void {
 			_vcastr3.playerMoveTo(px, py);
 		}
-		private function fullScreen():void {
-			_vcastr3.fullScreen();
-		}
-		private function exitFullScreen():void {
-			_vcastr3.exitFullScreen();
+		private function seek(offset:Number):void {
+			_vcastr3.seek(offset);
 		}
 		public function addCallBack():void {
 			 ExternalInterface.addCallback("play", play);
@@ -83,8 +79,7 @@
 			 ExternalInterface.addCallback("volumeTo", volumeTo);
 			 ExternalInterface.addCallback("playerSizeTo", playerSizeTo);
 			 ExternalInterface.addCallback("playerMoveTo", playerMoveTo);
-			 ExternalInterface.addCallback("fullScreen", fullScreen);
-			 ExternalInterface.addCallback("exitFullScreen", exitFullScreen);			 
+			 ExternalInterface.addCallback("seek", seek);			 
 		}
 	}	
 }
