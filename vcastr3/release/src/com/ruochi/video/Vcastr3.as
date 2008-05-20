@@ -38,7 +38,7 @@
 			if (loaderInfo.parameters["xml"]) {
 				var xmlStr = replaceHat(String(loaderInfo.parameters["xml"]));
 				var dataXml = new XML(xmlStr);
-				if (dataXml.item.source) {
+				if (dataXml.channel.item.source) {
 					VcastrConfig.dataXml = dataXml;
 					xmlToVar(VcastrConfig.dataXml.config[0], VcastrConfig);										
 					loadPlugIns();
@@ -92,26 +92,26 @@
 			loadPlugIns();
 		}
 		private function loadPlugIns():void {
-			var length:int = VcastrConfig.dataXml.plugIns.plugIn.length();
+			var length:int = VcastrConfig.dataXml.plugIns.*.length();
 			_unLoadPlugInsNum = length;
 			for (var i:int = 0; i < length; i++) {
 				var loader:Loader = new Loader();
 				loader.name = String(i);
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaderComplete, false, 0, true)
-				loader.load(new URLRequest(VcastrConfig.dataXml.plugIns.plugIn[i].url[0]));
+				loader.load(new URLRequest(VcastrConfig.dataXml.plugIns.*[i].url[0]));
 			}
 			checkInit();
 		}
 		private function onLoaderComplete(e:Event) {
-			//(e.target.loader.content as Sprite).addEventListener(Event.INIT, onPlugInAddToStage, false, 0, true);
 			addChild(e.target.loader.content);
-			e.target.loader.content.dataXml = VcastrConfig.dataXml.plugIns.plugIn[int(e.target.loader.name)];
-			((e.target as LoaderInfo).loader.content as IVcastrPlugIn).init(this);
+			var plugIn:IVcastrPlugIn = (e.target as LoaderInfo).loader.content as IVcastrPlugIn
+			plugIn.dataXml = VcastrConfig.dataXml.plugIns.*[int(e.target.loader.name)];
+			plugIn.init(this);
 			_unLoadPlugInsNum--;
 			checkInit();
 		}
 		private function run():void {		
-			_videoXml = VcastrConfig.dataXml.item[_activeVideoId];	
+			_videoXml = VcastrConfig.dataXml.channel.item[_activeVideoId];	
 			addChild(_centerBtn);
 			configListener();
 			if (VcastrConfig.controlPanelMode!=VcastrConfig.NONE) {
@@ -161,9 +161,9 @@
 			_videoPlayer.seek(offset);
 		}
 		public function next():void {
-			if (_activeVideoId < VcastrConfig.dataXml.item.length()-1) {
+			if (_activeVideoId < VcastrConfig.dataXml.channel.item.length()-1) {
 				_activeVideoId++
-				_videoXml = VcastrConfig.dataXml.item[_activeVideoId];				
+				_videoXml = VcastrConfig.dataXml.channel.item[_activeVideoId];				
 				VcastrConfig.isAutoPlay = true;
 				_videoPlayer.dataXml =  _videoXml;
 			}
@@ -171,7 +171,7 @@
 		public function prev():void {
 			if (_activeVideoId > 0) {
 				_activeVideoId--
-				_videoXml = VcastrConfig.dataXml.item[_activeVideoId];				
+				_videoXml = VcastrConfig.dataXml.channel.item[_activeVideoId];				
 				VcastrConfig.isAutoPlay = true;
 				_videoPlayer.dataXml =  _videoXml;
 			}
