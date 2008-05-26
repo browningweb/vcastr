@@ -11,7 +11,7 @@
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import com.ruochi.net.CrossURLLoader;
+	import flash.net.URLLoader
 	import com.ruochi.component.SimpleAlert;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.utils.paramToVar;
@@ -47,9 +47,9 @@
 				}
 			}
 			if (VcastrConfig.dataXml==null) {
-				var xmlLoader:CrossURLLoader = new CrossURLLoader();
+				var xmlLoader:URLLoader = new URLLoader();
 				xmlLoader.addEventListener(Event.COMPLETE, onXmlLoaderComplete, false, 0, true);
-				xmlLoader.crossLoad(new URLRequest(VcastrConfig.xml));
+				xmlLoader.load(new URLRequest(VcastrConfig.xml));
 			}
 		}
 		private function checkInit():void {
