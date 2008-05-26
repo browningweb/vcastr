@@ -37,8 +37,8 @@
 			stage.addChild(SimpleAlert.instance);			
 			if (loaderInfo.parameters["xml"]) {
 				var xmlStr = replaceHat(String(loaderInfo.parameters["xml"]));
-				var dataXml = new XML(xmlStr);
-				if (dataXml.channel.item.source) {
+				var dataXml = new XML(xmlStr); 
+				if (dataXml.channel.item.source.length()>0) {
 					VcastrConfig.dataXml = dataXml;
 					xmlToVar(VcastrConfig.dataXml.config[0], VcastrConfig);										
 					loadPlugIns();
