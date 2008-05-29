@@ -39,9 +39,7 @@
 				var xmlStr = replaceHat(String(loaderInfo.parameters["xml"]));
 				var dataXml = new XML(xmlStr); 
 				if (dataXml.channel.item.source.length()>0) {
-					VcastrConfig.dataXml = dataXml;
-					xmlToVar(VcastrConfig.dataXml.config[0], VcastrConfig);										
-					loadPlugIns();
+					startUp(dataXml);
 				}else {
 					VcastrConfig.xml = xmlStr;
 				}
@@ -51,6 +49,14 @@
 				xmlLoader.addEventListener(Event.COMPLETE, onXmlLoaderComplete, false, 0, true);
 				xmlLoader.load(new URLRequest(VcastrConfig.xml));
 			}
+		}
+		private function startUp(xml:XML):void {
+			VcastrConfig.dataXml = xml;
+			if (VcastrConfig.dataXml.channel.item.length() > 0) {
+				VcastrConfig.isMulitVideo = true;
+			}
+			xmlToVar(VcastrConfig.dataXml.config[0], VcastrConfig);								
+			loadPlugIns();
 		}
 		private function checkInit():void {
 			if (_unLoadPlugInsNum == 0 && VcastrConfig.dataXml) {
@@ -87,9 +93,7 @@
 			dispatchEvent(e);
 		}
 		private function onXmlLoaderComplete(e:Event) {
-			VcastrConfig.dataXml = new XML(e.target.data);
-			xmlToVar(VcastrConfig.dataXml.config[0],VcastrConfig)			
-			loadPlugIns();
+			startUp(new XML(e.target.data));
 		}
 		private function loadPlugIns():void {
 			var length:int = VcastrConfig.dataXml.plugIns.*.length();
@@ -102,7 +106,7 @@
 			}
 			checkInit();
 		}
-		private function onLoaderComplete(e:Event) {
+		private function onLoaderComplete(e:Event) {trace(e.target.loader.name)
 			addChild(e.target.loader.content);
 			var plugIn:IVcastrPlugIn = (e.target as LoaderInfo).loader.content as IVcastrPlugIn
 			plugIn.dataXml = VcastrConfig.dataXml.plugIns.*[int(e.target.loader.name)];

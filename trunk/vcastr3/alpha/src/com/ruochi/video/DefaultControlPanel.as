@@ -1,8 +1,11 @@
 ﻿package com.ruochi.video {
+	import com.ruochi.shape.player.FFShape;
 	import com.ruochi.shape.player.FullScreenOffShape;
 	import com.ruochi.shape.player.FullScreenOnShape;
+	import com.ruochi.shape.player.OpenListShape;
 	import com.ruochi.shape.player.PauseShape;
 	import com.ruochi.shape.player.PlayShape;
+	import com.ruochi.shape.player.RewShape;
 	import com.ruochi.shape.player.SoundOffShape;
 	import com.ruochi.shape.player.SoundOnShape;
 	import com.ruochi.shape.Rect;
@@ -25,7 +28,10 @@
 		private var _panelHeight:Number = 17;
 		private var _playPauseBtn:IconGlowBtn = new IconGlowBtn(_panelHeight,_panelHeight);
 		private var _volumnBtn:IconGlowBtn = new IconGlowBtn(_panelHeight,_panelHeight);
-		private var _fullScreenBtn:IconGlowBtn = new IconGlowBtn(_panelHeight,_panelHeight);
+		private var _fullScreenBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
+		private var _nextBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
+		private var _prevBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
+		private var _openListBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
 		private var _progressSlider:Slider = new Slider();
 		private var _volumnSlider:Slider = new Slider(30);
 		private var _currentTimeText:EmbedText = new EmbedText();
@@ -44,6 +50,9 @@
 			_volumnBtn.icon = new SoundOffShape();
 			_fullScreenBtn.icon = new FullScreenOnShape();
 			_fullScreenBtn.icon = new FullScreenOffShape();
+			_nextBtn.icon = new FFShape();
+			_prevBtn.icon = new RewShape();
+			_openListBtn.icon = new OpenListShape();
 			setTextField(_currentTimeText);
 			setTextField(_totalTimeText);
 			_bg.alpha = VcastrConfig.controlPanelAlpha;
@@ -62,9 +71,20 @@
 		private function setLayout():void {
 			_bg.width = _panelWidth;
 			_playPauseBtn.x = _gap;
-			_currentTimeText.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
+			_prevBtn.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
+			_nextBtn.x = Math.round(_prevBtn.width + _prevBtn.x + _gap);
+			if (VcastrConfig.isMulitVideo) {
+				_currentTimeText.x = Math.round(_nextBtn.width + _nextBtn.x + _gap);
+			}else {
+				_currentTimeText.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
+			}
 			_progressSlider.x = Math.round(_currentTimeText.x + _currentTimeText.width );
-			_fullScreenBtn.x = Math.round(_panelWidth - _fullScreenBtn.width-_gap);
+			_openListBtn.x = Math.round(_panelWidth - _openListBtn.width - _gap);
+			if (VcastrConfig.isMulitVideo) {
+				_fullScreenBtn.x = Math.round(_openListBtn.x - _fullScreenBtn.width - _gap);
+			}else{
+				_fullScreenBtn.x = Math.round(_panelWidth - _fullScreenBtn.width - _gap);
+			}
 			_volumnSlider.x = Math.round(_fullScreenBtn.x - _volumnSlider.width - _gap);
 			_volumnBtn.x =  Math.round(_volumnSlider.x - _volumnBtn.width);
 			_totalTimeText.x = Math.round(_volumnBtn.x - _totalTimeText.width - _gap);
@@ -81,6 +101,11 @@
 			addChild(_volumnSlider);
 			addChild(_currentTimeText);
 			addChild(_totalTimeText);
+			if (VcastrConfig.isMulitVideo) {
+				addChild(_nextBtn);
+				addChild(_prevBtn);
+				addChild(_openListBtn);
+			}
 		}
 		private function configListener():void {			
 			_playPauseBtn.addEventListener(MouseEvent.CLICK, onPlayPauseBtnClick, false, 0, true);

@@ -4,7 +4,12 @@
 		<item>
 			<source>http://vcastr.ruochi.com/video/happy_feet.flv</source>
 			<duration></duration>
-			<title></title>
+			<title>Happy Feet Trailer</title>
+		</item>
+		<item>
+			<source>http://www.transformersmovie.com/transformers_640.flv</source>
+			<duration></duration>
+			<title>Transformersmovie Trailer</title>
 		</item>
 	</channel>
 	<config>
@@ -22,7 +27,7 @@
 	</config>
 	<plugIns>
 		<logoPlugIn>
-			<url>LogoPlugIn.swf</url>
+			<url>logoPlugIn.swf</url>
 			<logoText>Ruochi.com</logoText>
 			<logoTextAlpha>0.75</logoTextAlpha>
 			<logoTextFontSize>30</logoTextFontSize>			
