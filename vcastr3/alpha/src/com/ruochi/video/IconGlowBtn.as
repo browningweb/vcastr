@@ -11,6 +11,7 @@
 	import com.ruochi.layout.setCenter;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.utils.setColor;
+	import fl.motion.easing.*
 	public class IconGlowBtn extends Sprite {
 		private var _enable:Boolean = true;
 		private var _frame:int = 1;
@@ -25,12 +26,12 @@
 		}
 		private function onOverEffect(e:Event):void  {			
 			if (_enable != false) {
-				TweenFilterLite.to(_iconWrapper, .8, { glowFilter:{color:VcastrConfig.controlPanelBtnGlowColor, alpha:.7, blurX:3, blurY:3,strength:3} , overwrite:true } );
+				TweenFilterLite.to(_iconWrapper, 1, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:1, blurX:4, blurY:4, strength:3 }, ease:Elastic.easeOut,  overwrite:true } );
 			}
 		}
-		private function onOutEffect(e:Event):void  {			
+		private function onOutEffect(e:Event):void  {		
 			if (_enable != false) {
-				TweenFilterLite.to(_iconWrapper, .8, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:0, blurX:2, blurY:2 , strength:3 }, overwrite:true } );
+				TweenFilterLite.to(_iconWrapper, .8, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:0, blurX:2, blurY:2 , strength:3}, overwrite:true } );
 			}
 		}
 		private function onClickEffect(e:MouseEvent) :void {

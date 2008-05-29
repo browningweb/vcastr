@@ -17,5 +17,6 @@
 		public static var isShowAbout:Boolean = true;
 		public static var scaleMode:String = ScaleUtils.SHOW_ALL;
 		public static var xml:String = "vcastr.xml";
+		public static var isMulitVideo:Boolean = false;
 	}	
 }
