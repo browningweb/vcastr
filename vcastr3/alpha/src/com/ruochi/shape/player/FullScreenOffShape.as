@@ -1,6 +1,6 @@
 ﻿package com.ruochi.shape.player {
-import flash.display.Sprite;
-	public class FullScreenOffShape extends Sprite {
+import flash.display.Shape;
+	public class FullScreenOffShape extends Shape {
 		private var _color:uint;
 		public function FullScreenOffShape(color:uint = 0xffffff) {
 			_color = color;

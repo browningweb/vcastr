@@ -1,6 +1,6 @@
 ﻿package com.ruochi.shape.player {
-import flash.display.Sprite;
-	public class FFShape extends Sprite {
+import flash.display.Shape;
+	public class FFShape extends Shape {
 		private var _color:uint;
 		public function FFShape(color:uint = 0xffffff) {
 			_color = color;
