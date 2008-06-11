@@ -71,7 +71,7 @@
 			case "NetConnection.Connect.Success":
 				break;
 			case "NetStream.Play.StreamNotFound":
-				SimpleAlert.text = "Moive not found"
+				SimpleAlert.text = _url + "Moive not found"
 				break;
 			case "NetStream.Buffer.Flush":
 				resetParam();
