@@ -1,7 +1,7 @@
 ﻿package com.ruochi.shape{
-	import flash.display.Sprite;
+	import flash.display.Shape;
 	import flash.geom.Rectangle;
-	public class StripeShape extends Sprite {
+	public class StripeShape extends Shape {
 		private var _w:Number;
 		private var _h:Number;
 		private var _color1:uint;
@@ -12,9 +12,9 @@
 			_h = h;
 			_color1 = c1;
 			_color2 = c2;
-			buildUI();
+			draw();
 		}
-		private function buildUI():void {
+		private function draw():void {
 			graphics.clear();
 			graphics.beginFill(_color1);
 			graphics.drawRect(0, 0, _w, _h);
@@ -32,14 +32,14 @@
 		}
 		public function set color1(c:uint):void {
 			_color1 = c;
-			buildUI();
+			draw();
 		}
 		public function get color1():uint {
 			return _color1;
 		}
 		public function set color2(c:uint):void {
 			_color2 = c;
-			buildUI();
+			draw();
 		}
 		public function get color2():uint {
 			return _color2;

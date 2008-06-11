@@ -16,7 +16,8 @@
 	public class CenterBtn extends Sprite {
 		private var _playPauseBtn:IconGlowBtn = new IconGlowBtn();
 		private var _vcastr3:Vcastr3;
-		private var _bg:Rect = new Rect(100, 100, 0);
+		private var _rect:Rect = new Rect(100, 100, 0);
+		private var _bg:Sprite = new Sprite();
 		private var _isBgDoubleClick:Boolean = false;
 		private var _progressBar:StripeProgressBar = new StripeProgressBar(60,10);
 		public function CenterBtn() {
@@ -36,6 +37,7 @@
 			_playPauseBtn.scaleX = _playPauseBtn.scaleY = 2;
 			_bg.alpha = 0;
 			_progressBar.stripeShape.alpha = .5;
+			_bg.addChild(_rect);
 			addChild(_bg)
 			addChild(_progressBar);
 			addChild(_playPauseBtn);

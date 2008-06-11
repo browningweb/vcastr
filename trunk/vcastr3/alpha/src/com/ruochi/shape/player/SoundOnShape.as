@@ -1,6 +1,6 @@
 ﻿package com.ruochi.shape.player {
-import flash.display.Sprite;
-	public class SoundOnShape extends Sprite {
+import flash.display.Shape;
+	public class SoundOnShape extends Shape {
 		private var _color:uint;
 		public function SoundOnShape(color:uint = 0xffffff) {
 			_color = color;

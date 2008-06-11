@@ -1,4 +1,5 @@
 ﻿package com.ruochi.video{
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -44,7 +45,7 @@
 			buildUI();
 		}
 		private function buildUI():void  {			
-			_clickArea.buttonMode = true;
+			buttonMode = true;
 			_clickArea.width = _btnWidth;
 			_clickArea.height = _btnHeight;			
 			_clickArea.alpha = 0;
@@ -56,11 +57,11 @@
 			addChild(_clickArea);		
 		}
 		private function configListener():void  {
-			_clickArea.addEventListener(MouseEvent.MOUSE_OVER, onOverEffect, false, 0, true);
-			_clickArea.addEventListener(FocusEvent.FOCUS_IN, onOverEffect, false, 0, true);
-			_clickArea.addEventListener(FocusEvent.FOCUS_OUT, onOutEffect, false, 0, true);
-			_clickArea.addEventListener(MouseEvent.MOUSE_OUT, onOutEffect, false, 0, true);
-			_clickArea.addEventListener(MouseEvent.MOUSE_DOWN, onClickEffect, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OVER, onOverEffect, false, 0, true);
+			addEventListener(FocusEvent.FOCUS_IN, onOverEffect, false, 0, true);
+			addEventListener(FocusEvent.FOCUS_OUT, onOutEffect, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OUT, onOutEffect, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_DOWN, onClickEffect, false, 0, true);
 		}
 		public function set enable(en:Boolean):void  {
 			if (en) {				
@@ -75,7 +76,7 @@
 		public function get enable():Boolean {
 			return _enable;
 		}
-		public function set icon(icon:Sprite) {
+		public function set icon(icon:Shape) {
 			setCenter(icon, _clickArea)
 			setColor(icon, VcastrConfig.controlPanelBtnColor);
 			if (_iconWrapper.numChildren > 0) {

@@ -1,6 +1,6 @@
 ﻿package com.ruochi.shape.player {
-import flash.display.Sprite;
-	public class OpenListShape extends Sprite {
+import flash.display.Shape;
+	public class OpenListShape extends Shape {
 		private var _color:uint;
 		public function OpenListShape(color:uint = 0xffffff) {
 			_color = color;
