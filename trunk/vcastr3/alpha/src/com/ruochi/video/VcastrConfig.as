@@ -18,5 +18,6 @@
 		public static var scaleMode:String = ScaleUtils.SHOW_ALL;
 		public static var xml:String = "vcastr.xml";
 		public static var isMulitVideo:Boolean = false;
+		public static var textItemHeight:Number = 24;
 	}	
 }
