@@ -22,6 +22,7 @@
 	import com.ruochi.utils.formatTime;
 	import gs.TweenLite;
 	import com.ruochi.video.VideoEvent;
+	import com.ruochi.video.TextItemList;
 	public class DefaultControlPanel extends Sprite {
 		private var _vcastr3:Vcastr3;
 		private var _panelWidth:Number = 300;
@@ -37,9 +38,9 @@
 		private var _currentTimeText:EmbedText = new EmbedText();
 		private var _totalTimeText:EmbedText = new EmbedText();
 		private var _bg:Rect = new Rect(_panelWidth, _panelHeight, VcastrConfig.controlPanelBgColor);
-		private var _gap:Number = 5;
-		private var _dataXml:XML;
+		private var _gap:Number = 0;
 		private var _defualtVoluem = .8;
+		private var _textItemList:TextItemList;
 		public function DefaultControlPanel() {
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
 		}
@@ -53,6 +54,7 @@
 			_nextBtn.icon = new FFShape();
 			_prevBtn.icon = new RewShape();
 			_openListBtn.icon = new OpenListShape();
+			_textItemList = new TextItemList(VcastrConfig.dataXml);
 			setTextField(_currentTimeText);
 			setTextField(_totalTimeText);
 			_bg.alpha = VcastrConfig.controlPanelAlpha;
@@ -105,6 +107,7 @@
 				addChild(_nextBtn);
 				addChild(_prevBtn);
 				addChild(_openListBtn);
+				addChild(_textItemList);
 			}
 		}
 		private function configListener():void {			
@@ -113,10 +116,19 @@
 			_fullScreenBtn.addEventListener(MouseEvent.CLICK, onFullScreenBtnClick, false, 0, true);
 			_progressSlider.addEventListener(Event.CHANGE, onProgressSliderChange, false, 0, true);
 			_volumnSlider.addEventListener(Event.CHANGE, onVolumnSliderChange, false, 0, true);
+			_openListBtn.addEventListener(MouseEvent.CLICK, onOpenListBtn, false, 0, true);
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, onStageFullScreen, false, 0, true);
 			if(VcastrConfig.controlPanelMode==VcastrConfig.FLOAT){
 				stage.addEventListener(Event.MOUSE_LEAVE, onStageMouseLeave, false, 0, true);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseOver, false, 0, true);
+			}
+		}
+		
+		private function onOpenListBtn(e:MouseEvent):void {
+			if (_textItemList.isOpen) {
+				_textItemList.close();
+			} else {
+				_textItemList.open();
 			}
 		}
 		
