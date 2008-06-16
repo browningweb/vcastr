@@ -1,4 +1,4 @@
-﻿package src.com.ruochi.video {
+﻿package com.ruochi.video {
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
 	import com.ruochi.text.StyleText;
@@ -24,7 +24,10 @@
 			_styleText.x = 5;
 			_styleText.y = 2;
 			_styleText.align = "right";
+			_styleText.autoSize = "right"
+			_styleText.border = true;
 		}
+		
 		public function set text(s:String):void {
 			_styleText.text = s;
 			_bg.width = _styleText.width +10;
