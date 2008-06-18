@@ -6,16 +6,18 @@
 		private var _dataXml:XML
 		private var _length:int;
 		private var _isOpen:Boolean;
-		public function TextItemList(xml:XML) {
-			_dataXml = xml;
-			init();
+		private var _activeId:int = -1;
+		private static var _instance:TextItemList = new TextItemList();
+		public function TextItemList() {
 		}		
 		
-		private function init():void {
+		public function init(xml:XML):void {
+			_dataXml = xml;
 			_length = _dataXml.channel.item.length();
 			var maxW:int = 0;
 			var textItem:TextItem;
-			for (var i:int = 0; i < _length; i++) {
+			var i:int;
+			for (i = 0; i < _length; i++) {
 				textItem = new TextItem();
 				textItem.text = _dataXml.channel.item[i].title[0];
 				addChild(textItem);
@@ -23,25 +25,37 @@
 					maxW = textItem.width;
 				}
 			}
-			for ( var i:int = 0; i < _length; i++) {
+			for (i = 0; i < _length; i++) {
 				textItem = getChildAt(i) as TextItem;
 				textItem.width = maxW;
 			}
 		}
 		public function open():void {
 			for (var i:int = 0; i < _length; i++) {
-				TweenLite.to(getChildAt(i), .5, { y: -i * VcastrConfig.textItemHeight } ); 
+				(getChildAt(i) as TextItem).styleText.visible = true;
+				TweenLite.to(getChildAt(i), .2, { y: -i * (VcastrConfig.textItemHeight + 1), autoAlpha:1 } ); 
 			}
 			_isOpen = true;
 		}
 		public function close():void {
 			for (var i:int = 0; i < _length; i++) {
-				TweenLite.to(getChildAt(i), .5, { y: -i * VcastrConfig.textItemHeight } ); 
+				(getChildAt(i) as TextItem).styleText.visible = false;
+				TweenLite.to(getChildAt(i), .2, { y: -(i + .5) * (VcastrConfig.textItemHeight + 1), autoAlpha:0 } ); 
 			}
 			_isOpen = false;
 		}
 		public function get isOpen():Boolean {
 			return _isOpen;
+		}
+		public static function get instance():TextItemList {
+			return _instance;
+		}
+		public function set activeId(id:int):void {
+			if (_activeId > -1) {
+				(getChildAt(_activeId) as TextItem).isActive = false;
+			}
+			_activeId = id;
+			(getChildAt(_activeId) as TextItem).isActive = true;
 		}
 	}	
 }

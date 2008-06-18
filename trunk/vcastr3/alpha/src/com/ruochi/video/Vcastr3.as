@@ -31,13 +31,13 @@
 		public function Vcastr3() {
 			init();
 		}
-		private function init():void {
+		public function init():void {
 			Security.allowDomain("*");
 			addChild(_videoPlayer);			
 			stage.addChild(SimpleAlert.instance);			
 			if (loaderInfo.parameters["xml"]) {
-				var xmlStr = replaceHat(String(loaderInfo.parameters["xml"]));
-				var dataXml = new XML(xmlStr); 
+				var xmlStr:String = replaceHat(String(loaderInfo.parameters["xml"]));
+				var dataXml:XML = new XML(xmlStr); 
 				if (dataXml.channel.item.source.length()>0) {
 					startUp(dataXml);
 				}else {
@@ -52,7 +52,7 @@
 		}
 		private function startUp(xml:XML):void {
 			VcastrConfig.dataXml = xml;
-			if (VcastrConfig.dataXml.channel.item.length() > 0) {
+			if (VcastrConfig.dataXml.channel.item.length() > 1) {
 				VcastrConfig.isMulitVideo = true;
 			}
 			xmlToVar(VcastrConfig.dataXml.config[0], VcastrConfig);								
@@ -73,6 +73,11 @@
 			_videoPlayer.addEventListener(VideoEvent.START_BUFFERING, onVideoPlayerStartBuffering, false, 0 , true);
 			_videoPlayer.addEventListener(VideoEvent.STOP_BUFFERING, onVideoPlayerStopBuffering, false, 0, true);
 			_videoPlayer.addEventListener(VideoEvent.STOP, onVideoPlayerStop, false, 0, true);
+			_videoPlayer.addEventListener(VideoEvent.LOADING, onVideoPlayerLoading, false, 0, true);
+		}
+		
+		private function onVideoPlayerLoading(e:VideoEvent):void {
+			dispatchEvent(e);
 		}
 		
 		private function onVideoPlayerStop(e:VideoEvent):void {
@@ -86,13 +91,13 @@
 		private function onVideoPlayerStartBuffering(e:VideoEvent):void {
 			dispatchEvent(e);
 		}
-		private function onVideoPlayerProgress(e:VideoEvent) {
+		private function onVideoPlayerProgress(e:VideoEvent):void {
 			dispatchEvent(e);
 		}
-		private function onVideoPlayerPlayHeadUpdate(e:VideoEvent) {
+		private function onVideoPlayerPlayHeadUpdate(e:VideoEvent):void {
 			dispatchEvent(e);
 		}
-		private function onXmlLoaderComplete(e:Event) {
+		private function onXmlLoaderComplete(e:Event):void {
 			startUp(new XML(e.target.data));
 		}
 		private function loadPlugIns():void {
@@ -106,7 +111,7 @@
 			}
 			checkInit();
 		}
-		private function onLoaderComplete(e:Event) {trace(e.target.loader.name)
+		private function onLoaderComplete(e:Event):void {
 			addChild(e.target.loader.content);
 			var plugIn:IVcastrPlugIn = (e.target as LoaderInfo).loader.content as IVcastrPlugIn
 			plugIn.dataXml = VcastrConfig.dataXml.plugIns.*[int(e.target.loader.name)];
@@ -140,7 +145,7 @@
 		public function playPause():void {
 			_videoPlayer.playPause();
 		}
-		public function play() {
+		public function play():void {
 			_videoPlayer.play();
 		}
 		public function pause():void {
