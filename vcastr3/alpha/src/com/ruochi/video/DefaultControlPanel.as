@@ -23,6 +23,7 @@
 	import gs.TweenLite;
 	import com.ruochi.video.VideoEvent;
 	import com.ruochi.video.TextItemList;
+	import com.ruochi.layout.Margin;
 	public class DefaultControlPanel extends Sprite {
 		private var _vcastr3:Vcastr3;
 		private var _panelWidth:Number = 300;
@@ -39,8 +40,9 @@
 		private var _totalTimeText:EmbedText = new EmbedText();
 		private var _bg:Rect = new Rect(_panelWidth, _panelHeight, VcastrConfig.controlPanelBgColor);
 		private var _gap:Number = 0;
-		private var _defualtVoluem = .8;
-		private var _textItemList:TextItemList;
+		private var _defualtVoluem:Number = .8;
+		private var _textItemList:TextItemList = TextItemList.instance;
+		private var _margin:Margin = new Margin(0, 5, 0, 5);
 		public function DefaultControlPanel() {
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
 		}
@@ -54,7 +56,7 @@
 			_nextBtn.icon = new FFShape();
 			_prevBtn.icon = new RewShape();
 			_openListBtn.icon = new OpenListShape();
-			_textItemList = new TextItemList(VcastrConfig.dataXml);
+			_textItemList.init(VcastrConfig.dataXml);
 			setTextField(_currentTimeText);
 			setTextField(_totalTimeText);
 			_bg.alpha = VcastrConfig.controlPanelAlpha;
@@ -72,7 +74,7 @@
 		}
 		private function setLayout():void {
 			_bg.width = _panelWidth;
-			_playPauseBtn.x = _gap;
+			_playPauseBtn.x = _gap + _margin.left;
 			_prevBtn.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
 			_nextBtn.x = Math.round(_prevBtn.width + _prevBtn.x + _gap);
 			if (VcastrConfig.isMulitVideo) {
@@ -81,11 +83,11 @@
 				_currentTimeText.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
 			}
 			_progressSlider.x = Math.round(_currentTimeText.x + _currentTimeText.width );
-			_openListBtn.x = Math.round(_panelWidth - _openListBtn.width - _gap);
+			_openListBtn.x = Math.round(_panelWidth - _openListBtn.width - _gap - Number(_margin.right));
 			if (VcastrConfig.isMulitVideo) {
 				_fullScreenBtn.x = Math.round(_openListBtn.x - _fullScreenBtn.width - _gap);
 			}else{
-				_fullScreenBtn.x = Math.round(_panelWidth - _fullScreenBtn.width - _gap);
+				_fullScreenBtn.x = Math.round(_panelWidth - _fullScreenBtn.width - _gap -  Number(_margin.right));
 			}
 			_volumnSlider.x = Math.round(_fullScreenBtn.x - _volumnSlider.width - _gap);
 			_volumnBtn.x =  Math.round(_volumnSlider.x - _volumnBtn.width);
@@ -93,6 +95,8 @@
 			_progressSlider.sliderWidth = Math.round(_totalTimeText.x - _currentTimeText.x -_currentTimeText.width-0);
 			_volumnSlider.y = 4;
 			_progressSlider.y = 4;
+			_textItemList.x = _panelWidth;
+			_textItemList.y = -VcastrConfig.textItemHeight-1;
 		}
 		private function addChindren():void {
 			addChild(_bg);
@@ -133,13 +137,13 @@
 		}
 		
 		private function onStageMouseOver(e:MouseEvent):void {
-			TweenLite.to(this, .5, { alpha:1 } );
+			TweenLite.to(this, .5, { autoAlpha:1 } );
 		}
 		
 		private function onStageMouseLeave(e:Event):void {
-			TweenLite.to(this, .5, { alpha:0 } );
+			TweenLite.to(this, .5, { autoAlpha:0 } );
 		}
-		private function onStageFullScreen(e:FullScreenEvent) {
+		private function onStageFullScreen(e:FullScreenEvent):void {
 			if (stage.displayState == StageDisplayState.NORMAL) {
 				_fullScreenBtn.frame = 2;
 			}else {

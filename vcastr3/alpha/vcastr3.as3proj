@@ -4,7 +4,7 @@
   <output>
     <movie disabled="True" />
     <movie input="" />
-    <movie path="" />
+    <movie path="example\vcastr3.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
@@ -13,7 +13,6 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="." />
     <class path="src" />
   </classpaths>
   <!-- Build options -->
@@ -75,6 +74,6 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="NewTab" />
+    <option testMovie="ExternalPlayer" />
   </options>
 </project>

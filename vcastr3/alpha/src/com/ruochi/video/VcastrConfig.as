@@ -5,7 +5,7 @@
 		public static const BOTTOM:String = "bottom";
 		public static const NONE:String = "none";
 		public static var bufferTime:Number = 4;
-		public static var controlPanelAlpha = .75;
+		public static var controlPanelAlpha:Number = .75;
 		public static var controlPanelBgColor:uint = 0xff6600;
 		public static var controlPanelBtnColor:uint = 0xffffff;
 		public static var controlPanelBtnGlowColor:uint = 0xffff00;		

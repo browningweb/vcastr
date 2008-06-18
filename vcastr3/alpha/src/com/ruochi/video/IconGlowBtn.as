@@ -5,7 +5,7 @@
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
-	import fl.motion.easing.*
+	import fl.motion.easing.*;
 	import gs.TweenFilterLite;
 	import gs.TweenLite;
 	import com.ruochi.shape.Rect;
@@ -76,7 +76,7 @@
 		public function get enable():Boolean {
 			return _enable;
 		}
-		public function set icon(icon:Shape) {
+		public function set icon(icon:Shape):void {
 			setCenter(icon, _clickArea)
 			setColor(icon, VcastrConfig.controlPanelBtnColor);
 			if (_iconWrapper.numChildren > 0) {

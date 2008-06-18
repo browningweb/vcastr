@@ -6,7 +6,7 @@
     import flash.ui.ContextMenuItem;
     import flash.ui.ContextMenuBuiltInItems;
     import flash.events.ContextMenuEvent;
-	public function about(sprite:Sprite,lable:String, link:String) {
+	public function about(sprite:Sprite,lable:String, link:String):void {
 		var contextMenu:ContextMenu = new ContextMenu();
 		contextMenu.hideBuiltInItems();
 		var item:ContextMenuItem = new ContextMenuItem(lable);

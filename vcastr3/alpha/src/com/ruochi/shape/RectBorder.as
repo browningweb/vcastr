@@ -1,6 +1,5 @@
 ﻿package com.ruochi.shape{
 	import flash.display.Shape;
-	import flash.geom.Rectangle;
 	public class RectBorder extends Shape {
 		private var _color:uint = 0xffffff;
 		private var _w:Number;
