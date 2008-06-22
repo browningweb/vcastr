@@ -1,19 +1,20 @@
 ﻿package com.ruochi.video.plugIn {
-	import com.ruochi.video.Controller;
+	//import com.ruochi.video.Controller;
 	import flash.display.Sprite;
 	import com.ruochi.video.VideoEvent;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.external.ExternalInterface;
 	import flash.system.Security;
 	public class JavaScriptPlugIn extends Sprite implements IVcastrPlugIn {
-		private var _controller:Controller;
+		private var _controller:Object;
 		public function JavaScriptPlugIn() {
 			Security.allowDomain("*");
 		}
 		public function set dataXml(xml:XML):void {
 			
 		}
-		public function init(controller:Controller):void {
+		public function init(controller:Object):void {
 			_controller = controller;
 			configListener();
 			addCallBack();
@@ -32,7 +33,7 @@
 			ExternalInterface.call("vcastrEvent", e.type,_controller.videoPlayer.state, _controller.videoPlayer.playheadTime, _controller.videoPlayer.bytesLoaded/_controller.videoPlayer.bytesTotal);
 		}
 		private function playPause():void {
-			_controller.playPause();
+			_controller["playPause"]();
 		}
 		private function play():void {
 			_controller.play();
