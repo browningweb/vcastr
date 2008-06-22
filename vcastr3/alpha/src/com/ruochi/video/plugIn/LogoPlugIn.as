@@ -6,7 +6,6 @@
 	import flash.display.Sprite;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
-	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import com.ruochi.layout.place;
@@ -70,9 +69,6 @@
 		
 		private function onLoaderComplete(e:Event):void {
 			var displayObject:DisplayObject = (e.target as LoaderInfo).loader.content as DisplayObject
-			if (displayObject is Bitmap) {
-				(displayObject as Bitmap).smoothing = true;
-			}
 			_logoClipSprite.addChild(displayObject);
 			_logoClipSprite.alpha = LogoPlugInConfig.logoClipAlpha;			
 			if (LogoPlugInConfig.logoClipLink != "") {
