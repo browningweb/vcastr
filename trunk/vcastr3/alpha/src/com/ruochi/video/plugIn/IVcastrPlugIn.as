@@ -1,7 +1,7 @@
 ﻿package com.ruochi.video.plugIn {
-	import com.ruochi.video.Vcastr3;
+	import com.ruochi.video.Controller;
 	public interface IVcastrPlugIn {
-		function init(vcastr3:Vcastr3):void;
+		function init(controller:Controller):void;
 		function set dataXml(xml:XML):void
 	}	
 }

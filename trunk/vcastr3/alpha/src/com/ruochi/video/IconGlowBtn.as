@@ -25,15 +25,11 @@
 			_btnHeight = h;
 			init();
 		}
-		private function onOverEffect(e:Event):void  {			
-			if (_enable != false) {
-				TweenFilterLite.to(_iconWrapper, 1, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:1, blurX:4, blurY:4, strength:3 }, ease:Elastic.easeOut,  overwrite:true } );
-			}
+		private function onOverEffect(e:Event):void  {	
+			TweenFilterLite.to(_iconWrapper, 1, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:1, blurX:4, blurY:4, strength:3 }, ease:Elastic.easeOut,  overwrite:true } );
 		}
 		private function onOutEffect(e:Event):void  {		
-			if (_enable != false) {
-				TweenFilterLite.to(_iconWrapper, .8, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:0, blurX:2, blurY:2 , strength:3}, overwrite:true } );
-			}
+			TweenFilterLite.to(_iconWrapper, .8, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:0, blurX:2, blurY:2 , strength:3}, overwrite:true } );
 		}
 		private function onClickEffect(e:MouseEvent) :void {
 			if (_enable != false) {
@@ -65,9 +61,9 @@
 		}
 		public function set enable(en:Boolean):void  {
 			if (en) {				
-				TweenLite.to(this,.5,{alpha:1});
+				TweenLite.to(this,.5,{alpha:1, overwrite:false});
 			} else {
-				TweenLite.to(this,.5,{alpha:.2});
+				TweenLite.to(this,.5,{alpha:.2, overwrite:false});
 			}
 			_enable = en;
 			mouseEnabled = _enable;

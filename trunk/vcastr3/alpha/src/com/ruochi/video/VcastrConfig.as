@@ -5,6 +5,10 @@
 		public static const BOTTOM:String = "bottom";
 		public static const NONE:String = "none";
 		public static var bufferTime:Number = 4;
+		public static var videoWidth:int = -1;
+		public static var videoHeight:int = -1;
+		public static var videoX:int = 0;
+		public static var videoY:int = 0;
 		public static var controlPanelAlpha:Number = .75;
 		public static var controlPanelBgColor:uint = 0xff6600;
 		public static var controlPanelBtnColor:uint = 0xffffff;
@@ -19,5 +23,8 @@
 		public static var xml:String = "vcastr.xml";
 		public static var isMulitVideo:Boolean = false;
 		public static var textItemHeight:Number = 24;
+		public static var multiVideoCompactBoundary = 240;
+		public static var singleVideoCompactBoundary = 180;
+		public static var isRepeat:Boolean = true;
 	}	
 }

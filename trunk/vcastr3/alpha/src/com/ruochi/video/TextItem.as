@@ -5,8 +5,9 @@
 	import com.ruochi.shape.Rect;
 	import com.ruochi.video.VcastrConfig;
 	public class TextItem extends Sprite {
-		private var _isActive:Boolean;
+		private var _isEnable:Boolean = true;
 		private var _styleText:StyleText = new StyleText();
+		private var _dataXml:XML;
 		private var _bg:Rect = new Rect(100,VcastrConfig.textItemHeight,VcastrConfig.controlPanelBgColor);
 		public function TextItem() {
 			init();
@@ -23,11 +24,12 @@
 		}
 		
 		private function onMouseOut(e:MouseEvent):void {
-			if (_isActive) {
-				_bg.alpha = .5;
+			if (_isEnable) {				
+				_bg.alpha = VcastrConfig.controlPanelAlpha;
 			}else {
-				_bg.alpha = .7;
+				_bg.alpha = .2;
 			}
+			//}
 		}
 		
 		private function onMouseOver(e:MouseEvent):void {
@@ -39,28 +41,42 @@
 			addChild(_styleText);			
 		}
 		
-		private function setChildren():void {
+		private function setChildren():void {			
+			buttonMode = true;
 			visible = false;
 			alpha = 0;
 			_bg.alpha = VcastrConfig.controlPanelAlpha;
+			_styleText.mouseEnabled = false;
 		}
 		
-		public function set text(s:String):void {
-			_styleText.text = s;
-			_bg.width = _styleText.width +10;
-		}
 		override public function set width(value:Number):void { 
 			_bg.width = value;
 			_bg.x = - _bg.width;
 			_styleText.x =  - _styleText.width - 5;
 		}
+		
 		public function get styleText():StyleText {
 			return _styleText
 		}
-		public function set isActive(b:Boolean):void {
-			_isActive = b;
-			mouseEnabled = !_isActive;
-			alpha = .5;
+		
+		public function set isEnable(b:Boolean):void {
+			_isEnable = b;
+			if(_isEnable){
+				_bg.alpha = VcastrConfig.controlPanelAlpha;
+			}else {
+				_bg.alpha = .2;
+			}
+			mouseEnabled = _isEnable;
+		}
+		
+		public function get id():int {
+			return _dataXml.childIndex();
+		}
+		
+		public function set dataXml(xml:XML):void {
+			_dataXml = xml;			
+			_styleText.text = _dataXml.title[0];
+			_bg.width = _styleText.width +10;
 		}
 	}	
 }

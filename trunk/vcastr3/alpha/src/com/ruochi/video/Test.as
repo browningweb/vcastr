@@ -6,7 +6,7 @@
 		
 		public function Test() {
 			var _playPauseBtn:IconGlowBtn = new IconGlowBtn()
-			_playPauseBtn.icon = new PlayShape();trace('b')
+			_playPauseBtn.icon = new PlayShape();
 			addChild(_playPauseBtn);
 		}
 		

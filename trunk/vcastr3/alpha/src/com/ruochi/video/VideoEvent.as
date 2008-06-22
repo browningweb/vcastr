@@ -17,6 +17,7 @@ package com.ruochi.video {
 		public static const LAYOUT_CHANGE:String = "layoutChange";
 		public static const RECEIVE_METADATA:String = "receivedMetadata";
 		public static const CUE_POINT:String = "cuePoint";
+		public static const MINI_PLAYHEAD_UPDATE:String = "miniPlayheadUpdate";
 		private var _state:String;
 		private var _playheadTime:Number;
 		public function VideoEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, state:String=null, playheadTime:Number=NaN) {
