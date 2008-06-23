@@ -7,6 +7,7 @@
 	import com.ruochi.video.Vcastr3;
 	import com.ruochi.utils.xmlToVar;
 	import com.ruochi.utils.about;
+	import flash.display.DisplayObject;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.display.Loader;
@@ -14,7 +15,7 @@
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.navigateToURL;
-	public class Controller extends EventDispatcher {
+	public class Controller extends EventDispatcher implements IController {
 		private var _unLoadPlugInsNum:int;
 		private var _activeVideoId:int = 0;
 		private static var _instance:Controller = new Controller();
@@ -69,8 +70,7 @@
 				gotoVideoAt(_activeVideoId);
 				dispatchEvent(new VideoEvent(VideoEvent.INIT, false, false, VideoPlayer.instance.state,  VideoPlayer.instance.playheadTime));
 				setLayout()
-			}	
-					
+			}						
 		}
 		
 		private function configListener():void {
@@ -133,7 +133,7 @@
 		
 		private function onVideoPlayerStateChange(e:VideoEvent):void {
 			CenterBtn.instance.onVideoPlayerStateChange(e);
-			if (videoPlayer.state == VideoEvent.PLAYING) {
+			if (VideoPlayer.instance.state == VideoEvent.PLAYING) {
 				DefaultControlPanel.instance.setToPlayingState();
 			}else {
 				DefaultControlPanel.instance.setToPausedState();
@@ -318,12 +318,25 @@
 			dispatchEvent(new VideoEvent(VideoEvent.LAYOUT_CHANGE, false, false, VideoPlayer.instance.state, VideoPlayer.instance.playheadTime));
 		}
 		
-		public function get videoPlayer():VideoPlayer {
-			return VideoPlayer.instance;
+		public function get videoPlayer():DisplayObject {
+			return VideoPlayer.instance as DisplayObject;
 		}
 		
 		public function get dataXml():XML {
 			return VcastrConfig.dataXml;
+		}
+		
+		public function get state():String {
+			return VideoPlayer.instance.state;
+		}		
+		
+		public function get bytesLoadedPersent():Number {
+			return VideoPlayer.instance.bytesLoaded / VideoPlayer.instance.bytesTotal;
+		}
+		
+		
+		public function get playHeadTime():int {
+			return VideoPlayer.instance.playheadTime;
 		}
 		
 		static public function get instance():Controller {
