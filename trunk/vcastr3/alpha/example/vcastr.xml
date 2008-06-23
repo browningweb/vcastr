@@ -25,11 +25,12 @@
 		<isLoadBegin>true</isLoadBegin>
 		<isShowAbout>true</isShowAbout>
 		<scaleMode>showAll</scaleMode>
+		<isRepeat>false</isRepeat>
 	</config>
 	<plugIns>
 		<logoPlugIn>
 			<url>logoPlugIn.swf</url>
-			<logoText>Ruochi.com</logoText>
+			<logoText>www.ruochi.com</logoText>
 			<logoTextAlpha>0.75</logoTextAlpha>
 			<logoTextFontSize>30</logoTextFontSize>
 			<logoTextLink>http://www.ruochigroup.com</logoTextLink>

@@ -162,7 +162,7 @@
 		}
 		
 		public function loadConfig(str:String):void {
-			if(!str){
+			if(str!=undefined){
 				VcastrConfig.xml = replaceHat(str);
 			}
 			if (VcastrConfig.xml.indexOf("<") > -1) {
@@ -175,7 +175,7 @@
 			}else {
 				var configUrlLoader:URLLoader = new URLLoader();
 				configUrlLoader.addEventListener(Event.COMPLETE, configUrlLoaderComplete, false, 0, true);
-				configUrlLoader.load(new URLRequest(VcastrConfig.xml));
+				configUrlLoader.load(new URLRequest(VcastrConfig.xml))
 			}
 		}		
 		
