@@ -1,11 +1,9 @@
 ﻿package com.ruochi.video.plugIn {
-	import com.ruochi.sprites.RectSprite;
-	import com.ruochi.video.Controller;
 	import flash.text.TextField;
-	import flash.display.DisplayObject;
+	import com.ruochi.sprites.RectSprite;
+	import com.ruochi.video.IController;
 	import flash.display.Sprite;
 	import flash.display.Loader;
-	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import com.ruochi.layout.place;
@@ -21,14 +19,15 @@
 		private var _rect:RectSprite = new RectSprite();
 		private var _logoTextWrapper:Sprite = new Sprite();
 		private var _dataXml:XML;
-		private var _controller:Controller;
+		private var _controller:IController;
+		private	var _loader:Loader = new Loader();
 		public function LogoPlugIn() {
 			
 		}
 		public function set dataXml(xml:XML):void {
 			_dataXml = xml;
 		}
-		public function init(controller:Controller):void {
+		public function init(controller:IController):void {
 			_controller = controller;			
 			xmlToVar(_dataXml, LogoPlugInConfig); 
 			if (LogoPlugInConfig.logoText != "") {				
@@ -52,11 +51,10 @@
 			}
 			if (LogoPlugInConfig.logoClipUrl) {
 				addChild(_logoClipSprite);
-				var loader:Loader = new Loader();
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaderComplete, false, 0, true);
-				loader.load(new URLRequest(LogoPlugInConfig.logoClipUrl));
+				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaderComplete, false, 0, true);
+				_loader.load(new URLRequest(LogoPlugInConfig.logoClipUrl));
 			}
-			Controller.instance.addEventListener(VideoEvent.LAYOUT_CHANGE, onVcastrLayoutChange, false, 0, true);
+			_controller.addEventListener(VideoEvent.LAYOUT_CHANGE, onVcastrLayoutChange, false, 0, true);
 		}		
 		
 		private function onVcastrLayoutChange(e:Event):void {
@@ -68,10 +66,9 @@
 		}
 		
 		private function onLoaderComplete(e:Event):void {
-			var displayObject:DisplayObject = (e.target as LoaderInfo).loader.content as DisplayObject
-			_logoClipSprite.addChild(displayObject);
+			_logoClipSprite.addChild(_loader);
 			_logoClipSprite.alpha = LogoPlugInConfig.logoClipAlpha;			
-			if (LogoPlugInConfig.logoClipLink != "") {
+			if (LogoPlugInConfig.logoClipLink != ""){
 				_logoClipSprite.buttonMode = true;
 				_logoClipSprite.addEventListener(MouseEvent.CLICK, onlogoSpriteClick, false, 0, true);
 			}
