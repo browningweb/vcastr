@@ -74,8 +74,12 @@
 		}
 		
 		public function set dataXml(xml:XML):void {
-			_dataXml = xml;			
-			_styleText.text = _dataXml.title[0];
+			_dataXml = xml;
+			if(_dataXml.title[0]!=undefined){
+				_styleText.text = _dataXml.title[0];
+			}else {
+				_styleText.text = _dataXml.source[0];
+			}
 			_bg.width = _styleText.width +10;
 		}
 	}	

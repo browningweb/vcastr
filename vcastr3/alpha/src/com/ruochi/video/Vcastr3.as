@@ -23,8 +23,8 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE
 			stage.addChild(SimpleAlert.instance);
 			addChild(VideoPlayer.instance);
-			stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
 			Controller.instance.loadConfig(loaderInfo.parameters["xml"]);trace(loaderInfo.parameters["xml"],'----')
+			stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
 		}
 		
 		private function onStageResize(e:Event):void {
