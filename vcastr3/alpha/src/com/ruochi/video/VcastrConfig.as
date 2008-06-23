@@ -25,6 +25,6 @@
 		public static var textItemHeight:Number = 24;
 		public static var multiVideoCompactBoundary = 240;
 		public static var singleVideoCompactBoundary = 180;
-		public static var isRepeat:Boolean = true;
+		public static var isRepeat:Boolean = false;
 	}	
 }
