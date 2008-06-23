@@ -159,11 +159,11 @@
 		
 		private function onVideoPlayerReady(e:VideoEvent):void {
 			dispatchEvent(e);
-		}
-		
-		public function loadConfig(str:String):void {
-			if(str!=undefined){
-				VcastrConfig.xml = replaceHat(str);
+		}		
+
+		public function loadConfig(str:Object):void {
+			if(str){
+				VcastrConfig.xml = replaceHat(String(str));
 			}
 			if (VcastrConfig.xml.indexOf("<") > -1) {
 				VcastrConfig.dataXml = new XML(VcastrConfig.xml); 
