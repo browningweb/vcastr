@@ -1,5 +1,4 @@
 ﻿package com.ruochi.video {
-	import com.ruochi.component.button.IconGlowBtn;
 	import com.ruochi.shape.player.FFShape;
 	import com.ruochi.shape.player.FullScreenOffShape;
 	import com.ruochi.shape.player.FullScreenOnShape;
