@@ -7,11 +7,11 @@
 			<title>Happy Feet Trailer</title>
 			<link>http://www.ruochi.com/</link>
 		</item>
-		<!--item>
+		<item>
 			<source>http://www.transformersmovie.com/transformers_640.flv</source>
 			<duration></duration>
 			<title>Transformersmovie Trailer</title>
-		</item-->
+		</item>
 	</channel>
 	<config>
 		<bufferTime>4</bufferTime>
