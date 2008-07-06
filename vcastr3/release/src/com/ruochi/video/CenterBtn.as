@@ -7,61 +7,72 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.StageDisplayState;
+	import flash.events.TimerEvent;
 	import com.ruochi.video.IconGlowBtn;
-	import com.ruochi.video.Vcastr3;
 	import gs.TweenLite;
-	import com.ruochi.utils.cover;
 	import com.ruochi.video.VideoEvent;
-	import com.ruochi.component.StripeProgressBar;	
+	import com.ruochi.component.StripeProgressBar;
+	import flash.utils.Timer;
 	public class CenterBtn extends Sprite {
 		private var _playPauseBtn:IconGlowBtn = new IconGlowBtn();
-		private var _vcastr3:Vcastr3;
-		private var _bg:Rect = new Rect(100, 100, 0);
+		private var _rect:Rect = new Rect(100, 100, 0);
+		private var _bg:Sprite = new Sprite();
 		private var _isBgDoubleClick:Boolean = false;
-		private var _progressBar:StripeProgressBar = new StripeProgressBar(60,10);
+		private static var _instance:CenterBtn = new CenterBtn();
+		private var _progressBar:StripeProgressBar = new StripeProgressBar(60, 10);
+		private var _timer:Timer = new Timer(300, 1);
 		public function CenterBtn() {
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
-		}
-		private function onAddedToStage(e:Event):void {
-			init();
+			if (!_instance) {
+				init();
+			}else {
+				throw new Error("singleton");
+			}
 		}
 		private function init():void {
-			_vcastr3 = parent as Vcastr3;
-			buildUI();
+			setChildren();
+			addChildren();
 			configListener();
 		}
-		private function buildUI():void {
+		
+		private function addChildren():void{
+					
+			addChild(_bg)
+			addChild(_progressBar);
+			addChild(_playPauseBtn);
+			_bg.addChild(_rect);
+		}
+		
+		private function setChildren():void {
+			buttonMode = true;
 			_playPauseBtn.icon = new PlayShape();
 			_playPauseBtn.icon = new PauseShape();
 			_playPauseBtn.scaleX = _playPauseBtn.scaleY = 2;
 			_bg.alpha = 0;
 			_progressBar.stripeShape.alpha = .5;
-			addChild(_bg)
-			addChild(_progressBar);
-			addChild(_playPauseBtn);
-			setLayout();
+			_bg.doubleClickEnabled = true;
 		}
-		private function setLayout():void {
-			_bg.width = _vcastr3.videoPlayer.playerWidth;
-			_bg.height = _vcastr3.videoPlayer.playerHeight;
+		public function setLayout(w:int,h:int):void {
+			_bg.width = w;
+			_bg.height = h;
 			setCenter(_playPauseBtn, _bg);
 			setCenter(_progressBar, _bg);
 			_progressBar.y = _playPauseBtn.y + 40;
-			//_playPauseBtn.x += _bg.x;
-			//_playPauseBtn.y += _bg.y;
 		}
 		private function configListener():void {
-			_vcastr3.addEventListener(VideoEvent.LAYOUT_CHANGE, onVcastrLayoutChange, false, 0, true);			
-			_vcastr3.videoPlayer.addEventListener(VideoEvent.STATE_CHANGE, onVideoPlayerStateChange, false, 0, true);
-			_vcastr3.videoPlayer.addEventListener(VideoEvent.START_BUFFERING, onVideoPlayerStartBuffering, false, 0, true);
-			_vcastr3.videoPlayer.addEventListener(VideoEvent.STOP_BUFFERING, onVideoPlayerStopBuffering, false, 0, true);
 			_bg.addEventListener(MouseEvent.CLICK, onBgClick, false, 0, true);
-			_bg.doubleClickEnabled = true;
 			_bg.addEventListener(MouseEvent.DOUBLE_CLICK, onBgDoubleClick, false, 0, true);
 			_playPauseBtn.addEventListener(MouseEvent.CLICK, onPlayPauseBtnClick, false, 0, true);
+			_timer.addEventListener(TimerEvent.TIMER, onTimer, false, 0, true);
 		}
 		
-		private function onVideoPlayerStateChange(e:VideoEvent):void {
+		private function onTimer(e:TimerEvent):void {
+			if (!_isBgDoubleClick) {
+				Controller.instance.playPause();
+			}
+			_isBgDoubleClick = false;
+		}
+		
+		public function onVideoPlayerStateChange(e:VideoEvent):void {
 			if (e.state == VideoEvent.PLAYING) {
 				turnOff()
 			}else {
@@ -69,22 +80,19 @@
 			}
 		}
 		
-		private function onVideoPlayerStopBuffering(e:VideoEvent):void {
+		public function stopBuffering():void {
 			_progressBar.stop();
 		}
 		
-		private function onVideoPlayerStartBuffering(e:VideoEvent):void {
+		public function startBuffering():void {
 			_progressBar.start();
 		}
 		private function onBgClick(e:MouseEvent):void {
-			TweenLite.killDelayedCallsTo(delayBgClick);
-			TweenLite.delayedCall(.3,delayBgClick);
+			_timer.reset();
+			_timer.start();
 		}
 		private function delayBgClick():void {
-			if (!_isBgDoubleClick) {
-				_vcastr3.videoPlayer.playPause();
-			}
-			_isBgDoubleClick = false;
+			
 		}
 		private function onBgDoubleClick(e:MouseEvent):void {			
 			_isBgDoubleClick = true;
@@ -95,11 +103,10 @@
 			}
 		}
 		private function onPlayPauseBtnClick(e:MouseEvent):void {
-			_vcastr3.videoPlayer.playPause();
+			Controller.instance.playPause();
+			Controller.instance.videoLink();
 		}
-		private function onVcastrLayoutChange(e:Event):void {
-			setLayout();
-		}
+		
 		private function turnOn():void {
 			_playPauseBtn.frame = 1;
 			_playPauseBtn.visible = true;
@@ -108,6 +115,9 @@
 			_progressBar.stop();
 			_playPauseBtn.frame = 2;
 			_playPauseBtn.visible = false;
+		}
+		static function get instance():CenterBtn {
+			return _instance;
 		}
 	}	
 }

@@ -1,7 +1,7 @@
 ﻿package com.ruochi.layout{
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
-	public function setCenter(displayObject:DisplayObject,displayObjectContainer:DisplayObject=null) {
+	public function setCenter(displayObject:DisplayObject,displayObjectContainer:DisplayObject=null):void {
 		if (displayObjectContainer != null) {
 			if(displayObjectContainer is Stage){
 				displayObject.x = Math.round(((displayObjectContainer as Stage).stageWidth -displayObject.width) / 2);

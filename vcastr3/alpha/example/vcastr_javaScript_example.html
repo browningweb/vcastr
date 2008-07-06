@@ -1,18 +1,7 @@
 ﻿<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Vcastr - JavaScript Example</title>
-<script language="JavaScript">
-     function vcastrEvent(type,state,playHeadTime,loadPersent) {
-         document.forms["form1"].output.value = "\ntype:"+type+", state:"+state+", playHeadTime:"+playHeadTime+", loadPersent:"+loadPersent +document.forms["form1"].output.value;
-     }
-     function getVcastr() {
-         if (navigator.appName.indexOf("Microsoft") != -1) {
-             return window["vcastr3"];
-         } else {
-             return document["vcastr3"];
-         }
-     }
-</script>
+
 <style type="text/css">
 
 div {
@@ -55,9 +44,9 @@ input{
 <form name="form1">
 	<div>
 		<input onclick="getVcastr().playPause();" type="button" value="playPasue" />
-		<input onclick="getVcastr().play();" type="button" value="play" />
+		<input onclick="getVcastr().videoPlay();" type="button" value="play" />
 		<input onclick="getVcastr().pause();" type="button" value="pause" />
-		<input onclick="getVcastr().stop();" type="button" value="stop" />
+		<input onclick="getVcastr().videoStop();" type="button" value="stop" />
 		<input onclick="getVcastr().ff();" type="button" value="ff" />
 		<input onclick="getVcastr().rew();" type="button" value="rew" />
 		<input onclick="getVcastr().next();" type="button" value="next" />
@@ -72,7 +61,18 @@ input{
 	<div>
 		<textarea cols="60" name="output" readonly="true" rows="20"></textarea></div>
 </form>
-
+<script language="JavaScript">
+     function vcastrEvent(type,state,playHeadTime,loadPersent) {
+        document.forms["form1"].output.value = "\ntype:"+type+", state:"+state+", playHeadTime:"+playHeadTime+", loadPersent:"+loadPersent +document.forms["form1"].output.value;
+     }
+     function getVcastr() {
+         if (navigator.appName.indexOf("Microsoft") != -1) {
+             return window["vcastr3"];
+         } else {
+             return document["vcastr3"];
+         }
+     }
+</script>
 </body>
 
 </html>
