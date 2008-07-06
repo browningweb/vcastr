@@ -13,7 +13,8 @@
 		private var _blackBg:Rect = new Rect(_sliderWidth - 6, 5, 0x000000);
 		private var _border:RectBorder = new RectBorder(_sliderWidth-4, 7, 1, VcastrConfig.controlPanelBtnColor);
 		private var _whiteBg:Rect = new Rect(0.1, 3,VcastrConfig.controlPanelBtnColor);
-		private var _bg:Rect = new Rect(_sliderWidth, 9, VcastrConfig.controlPanelBtnColor);
+		private var _rect:Rect = new Rect(_sliderWidth, 9, VcastrConfig.controlPanelBtnColor);
+		private var _bg:Sprite = new Sprite;
 		private var _btn:IconGlowBtn = new IconGlowBtn(9, 9);
 		private var _couldDragPersent:Number = 1;
 		private var _btnPersent:Number = 0;
@@ -44,6 +45,7 @@
 			addChildren();
 		}		
 		private function addChildren():void {
+			_bg.addChild(_rect);
 			addChild(_blackBg);
 			addChild(_whiteBg);
 			addChild(_border);

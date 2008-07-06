@@ -20,7 +20,7 @@
 			embedFonts = true;
 			init();
 		}
-		public function init() {
+		public function init():void {
 			_tf.font = _font;
 			_tf.color = _color;
 			_tf.size = _size;
@@ -28,22 +28,22 @@
 			defaultTextFormat = _tf;
 			setTextFormat(_tf);			
 		}
-		public function set color(_c:uint) {
+		public function set color(_c:uint):void {
 			_color = _c;
 			init();
 		}
-		public function get color() {
+		public function get color():uint {
 			return _color;
 		}
-		public function set align(_str:String) {
+		public function set align(_str:String):void {
 			_align = _str;
 			init();
 		}
-		public function set size(_n:Number) {
+		public function set size(_n:Number):void {
 			_size = _n;
 			init();
 		}
-		public function set font(_str:String) {
+		public function set font(_str:String):void {
 			_font = _str;
 			init();
 		}

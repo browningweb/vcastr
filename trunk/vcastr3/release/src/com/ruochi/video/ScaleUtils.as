@@ -19,8 +19,8 @@
 			video.height = videoContainer.height;
 		}
 		public static function fillShowAll(video:Video, videoContainer:DisplayObject):void {
-			var originW = video.videoWidth;
-			var originH = video.videoHeight;
+			var originW:Number = video.videoWidth;
+			var originH:Number = video.videoHeight;
 			if (originW/originH>videoContainer.width/videoContainer.height) {
 				video.width = videoContainer.width;			
 				video.height = Math.round(video.width / originW * originH);
@@ -32,8 +32,8 @@
 			video.y = Math.round((videoContainer.height -video.height) / 2);
 		}
 		public static function fillNoBorder(video:Video, videoContainer:DisplayObject):void {
-			var originW = video.videoWidth;
-			var originH = video.height/video.scaleY;
+			var originW:Number = video.videoWidth;
+			var originH:Number = video.height/video.scaleY;
 			if (originW/originH>videoContainer.width/videoContainer.height) {
 				video.height=videoContainer.height;
 				video.width=video.height/originH*originW;

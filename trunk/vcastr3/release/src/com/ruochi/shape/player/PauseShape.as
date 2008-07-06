@@ -1,6 +1,6 @@
 ﻿package com.ruochi.shape.player {
-import flash.display.Sprite;
-	public class PauseShape extends Sprite {
+import flash.display.Shape;
+	public class PauseShape extends Shape {
 		private var _color:uint;
 		public function PauseShape(color:uint = 0xffffff) {
 			_color = color;

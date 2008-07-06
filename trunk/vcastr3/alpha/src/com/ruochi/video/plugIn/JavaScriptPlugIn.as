@@ -38,10 +38,10 @@
 		}
 		
 		private function playPause():void {
-			_controller["playPause"]();
+			_controller.playPause();
 		}
 		
-		private function play():void {
+		private function playerPlay():void {
 			_controller.play();
 		}
 		
@@ -49,7 +49,7 @@
 			_controller.pause();
 		}
 		
-		private function stop():void {
+		private function playerStop():void {
 			_controller.stop();
 		}
 		
@@ -90,19 +90,25 @@
 		}
 		
 		public function addCallBack():void {
-			 ExternalInterface.addCallback("play", play);
-			 ExternalInterface.addCallback("pause", pause);
-			 ExternalInterface.addCallback("playPause", playPause);
-			 ExternalInterface.addCallback("stop", stop);
-			 ExternalInterface.addCallback("ff", ff);
-			 ExternalInterface.addCallback("rew", rew);
-			 ExternalInterface.addCallback("next", next);
-			 ExternalInterface.addCallback("prev", prev);
-			 ExternalInterface.addCallback("volumeTo", volumeTo);
-			 ExternalInterface.addCallback("playerSizeTo", playerSizeTo);
-			 ExternalInterface.addCallback("playerMoveTo", playerMoveTo);
-			 ExternalInterface.addCallback("seek", seek);
-			 ExternalInterface.addCallback("gotoVideoAt", gotoVideoAt);
+			if (ExternalInterface.available) {
+                try {
+					ExternalInterface.addCallback("videoPlay", playerPlay);
+					ExternalInterface.addCallback("videoStop", playerStop);
+					ExternalInterface.addCallback("playPause", playPause);
+					ExternalInterface.addCallback("pause", pause);
+					ExternalInterface.addCallback("ff", ff);
+					ExternalInterface.addCallback("rew", rew);
+					ExternalInterface.addCallback("next", next);
+					ExternalInterface.addCallback("prev", prev);
+					ExternalInterface.addCallback("volumeTo", volumeTo);
+					ExternalInterface.addCallback("playerSizeTo", playerSizeTo);
+					ExternalInterface.addCallback("playerMoveTo", playerMoveTo);
+					ExternalInterface.addCallback("seek", seek);
+					ExternalInterface.addCallback("gotoVideoAt", gotoVideoAt);
+				}catch (e:Error) {
+					
+				}
+			}
 		}
 	}	
 }

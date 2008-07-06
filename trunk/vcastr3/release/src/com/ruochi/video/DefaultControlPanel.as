@@ -1,8 +1,11 @@
 ﻿package com.ruochi.video {
+	import com.ruochi.shape.player.FFShape;
 	import com.ruochi.shape.player.FullScreenOffShape;
 	import com.ruochi.shape.player.FullScreenOnShape;
+	import com.ruochi.shape.player.OpenListShape;
 	import com.ruochi.shape.player.PauseShape;
 	import com.ruochi.shape.player.PlayShape;
+	import com.ruochi.shape.player.RewShape;
 	import com.ruochi.shape.player.SoundOffShape;
 	import com.ruochi.shape.player.SoundOnShape;
 	import com.ruochi.shape.Rect;
@@ -14,44 +17,62 @@
 	import flash.display.StageScaleMode;
 	import flash.display.StageDisplayState;
 	import flash.events.FullScreenEvent;
-	import com.ruochi.video.Vcastr3;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.utils.formatTime;
 	import gs.TweenLite;
 	import com.ruochi.video.VideoEvent;
+	import com.ruochi.video.TextItemList;
+	import com.ruochi.layout.Margin;
+	import fl.motion.easing.Linear;
 	public class DefaultControlPanel extends Sprite {
-		private var _vcastr3:Vcastr3;
-		private var _panelWidth:Number = 300;
-		private var _panelHeight:Number = 17;
+		private var _panelWidth:int = 300;
+		private var _panelHeight:int = 17;
 		private var _playPauseBtn:IconGlowBtn = new IconGlowBtn(_panelHeight,_panelHeight);
 		private var _volumnBtn:IconGlowBtn = new IconGlowBtn(_panelHeight,_panelHeight);
-		private var _fullScreenBtn:IconGlowBtn = new IconGlowBtn(_panelHeight,_panelHeight);
+		private var _fullScreenBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
+		private var _nextBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
+		private var _prevBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
+		private var _openListBtn:IconGlowBtn = new IconGlowBtn(_panelHeight, _panelHeight);
 		private var _progressSlider:Slider = new Slider();
 		private var _volumnSlider:Slider = new Slider(30);
 		private var _currentTimeText:EmbedText = new EmbedText();
 		private var _totalTimeText:EmbedText = new EmbedText();
 		private var _bg:Rect = new Rect(_panelWidth, _panelHeight, VcastrConfig.controlPanelBgColor);
-		private var _gap:Number = 5;
-		private var _dataXml:XML;
-		private var _defualtVoluem = .8;
+		private var _gap:int = 0;
+		private var _defualtVoluem:Number = .8;
+		private var _textItemList:TextItemList = TextItemList.instance;
+		private var _margin:Margin = new Margin(0, 5, 0, 5);
+		private static var _instance:DefaultControlPanel = new DefaultControlPanel();
 		public function DefaultControlPanel() {
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
+			if (!_instance) {
+				init();
+			}else {
+				throw new Error("singleton");
+			}
 		}
-		private function bulidUI():void {
+		private function init():void {
+			setChildren();
+			addChindren();
+			setLayout();
+			configListener();
+		}
+		private function setChildren():void {
 			_playPauseBtn.icon = new PlayShape();
 			_playPauseBtn.icon = new PauseShape();
 			_volumnBtn.icon = new SoundOnShape();
 			_volumnBtn.icon = new SoundOffShape();
 			_fullScreenBtn.icon = new FullScreenOnShape();
 			_fullScreenBtn.icon = new FullScreenOffShape();
+			_nextBtn.icon = new FFShape();
+			_prevBtn.icon = new RewShape();
+			_openListBtn.icon = new OpenListShape();
+			_textItemList.init(VcastrConfig.dataXml);
 			setTextField(_currentTimeText);
 			setTextField(_totalTimeText);
 			_bg.alpha = VcastrConfig.controlPanelAlpha;
 			_volumnSlider.sliderWidth = 30;
 			_volumnSlider.isSnap = true;			
-			_volumnSlider.value = _defualtVoluem;		
-			addChindren();
-			setLayout();
+			_volumnSlider.value = _defualtVoluem;
 		}
 		private function setTextField(textField:EmbedText):void {
 			textField.font = "SG16";
@@ -60,17 +81,66 @@
 			textField.y = 2;
 		}
 		private function setLayout():void {
+			var isCompact:Boolean = false;
+			if (VcastrConfig.isMulitVideo) {
+				if (_panelWidth < VcastrConfig.multiVideoCompactBoundary) {
+					isCompact = true;
+				}
+			}else {				
+				if (_panelWidth < VcastrConfig.singleVideoCompactBoundary) {
+					isCompact = true;
+				}
+			}
 			_bg.width = _panelWidth;
-			_playPauseBtn.x = _gap;
-			_currentTimeText.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
-			_progressSlider.x = Math.round(_currentTimeText.x + _currentTimeText.width );
-			_fullScreenBtn.x = Math.round(_panelWidth - _fullScreenBtn.width-_gap);
+			_playPauseBtn.x = _gap + _margin.left;
+			if (isCompact) {
+				_prevBtn.visible = false;
+				_nextBtn.visible = false;
+				_currentTimeText.visible = false;
+				_volumnSlider.visible = false;
+				_totalTimeText.visible = false;
+			}else {
+				_prevBtn.visible = true;
+				_nextBtn.visible = true;
+				_volumnSlider.visible = true;
+				_currentTimeText.visible = true;
+				_totalTimeText.visible = true;
+				_prevBtn.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
+				_nextBtn.x = Math.round(_prevBtn.width + _prevBtn.x + _gap);
+			}
+			if (VcastrConfig.isMulitVideo) {
+				_currentTimeText.x = Math.round(_nextBtn.width + _nextBtn.x + _gap);
+			}else {
+				_currentTimeText.x = Math.round(_playPauseBtn.width + _playPauseBtn.x + _gap);
+			}
+			if (isCompact) {
+				_progressSlider.x = Math.round(_playPauseBtn.x + _playPauseBtn.width );
+			}else {
+				_progressSlider.x = Math.round(_currentTimeText.x + _currentTimeText.width );
+			}
+			_openListBtn.x = Math.round(_panelWidth - _openListBtn.width - _gap - Number(_margin.right));
+			if (VcastrConfig.isMulitVideo) {
+				_fullScreenBtn.x = Math.round(_openListBtn.x - _fullScreenBtn.width - _gap);
+			}else{
+				_fullScreenBtn.x = Math.round(_panelWidth - _fullScreenBtn.width - _gap -  Number(_margin.right));
+			}
 			_volumnSlider.x = Math.round(_fullScreenBtn.x - _volumnSlider.width - _gap);
-			_volumnBtn.x =  Math.round(_volumnSlider.x - _volumnBtn.width);
+			
+			if (isCompact) {
+				_volumnBtn.x =  Math.round(_fullScreenBtn.x - _volumnBtn.width);
+			}else {				
+				_volumnBtn.x =  Math.round(_volumnSlider.x - _volumnBtn.width);
+			}
 			_totalTimeText.x = Math.round(_volumnBtn.x - _totalTimeText.width - _gap);
-			_progressSlider.sliderWidth = Math.round(_totalTimeText.x - _currentTimeText.x -_currentTimeText.width-0);
+			if(isCompact){
+				_progressSlider.sliderWidth = Math.round(_volumnBtn.x - _playPauseBtn.x -_playPauseBtn.width);
+			}else {
+				_progressSlider.sliderWidth = Math.round(_totalTimeText.x - _currentTimeText.x -_currentTimeText.width);
+			}
 			_volumnSlider.y = 4;
 			_progressSlider.y = 4;
+			_textItemList.x = _panelWidth;
+			_textItemList.y = -VcastrConfig.textItemHeight-1;
 		}
 		private function addChindren():void {
 			addChild(_bg);
@@ -81,13 +151,43 @@
 			addChild(_volumnSlider);
 			addChild(_currentTimeText);
 			addChild(_totalTimeText);
+			if (VcastrConfig.isMulitVideo) {
+				addChild(_nextBtn);
+				addChild(_prevBtn);
+				addChild(_openListBtn);
+				addChild(_textItemList);
+			}
 		}
-		private function configListener():void {			
+		public function configListener():void {			
 			_playPauseBtn.addEventListener(MouseEvent.CLICK, onPlayPauseBtnClick, false, 0, true);
 			_volumnBtn.addEventListener(MouseEvent.CLICK, onVolumnBtnClick, false, 0, true);
 			_fullScreenBtn.addEventListener(MouseEvent.CLICK, onFullScreenBtnClick, false, 0, true);
 			_progressSlider.addEventListener(Event.CHANGE, onProgressSliderChange, false, 0, true);
+			_progressSlider.addEventListener(MouseEvent.MOUSE_DOWN, onProgressSliderMouseDown, false, 0, true);
 			_volumnSlider.addEventListener(Event.CHANGE, onVolumnSliderChange, false, 0, true);
+			if (stage) {
+				configStageListener();
+			}else {
+				addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
+			}
+			if (VcastrConfig.isMulitVideo) {
+				_nextBtn.addEventListener(MouseEvent.CLICK, onNextBtnClick, false, 0, true);
+				_prevBtn.addEventListener(MouseEvent.CLICK, onPrevBtnClick, false, 0, true);
+				_openListBtn.addEventListener(MouseEvent.CLICK, onOpenListBtn, false, 0, true);				
+			}
+			
+			
+		}
+		
+		private function onPrevBtnClick(e:MouseEvent):void {			
+			Controller.instance.prev();
+		}
+		
+		private function onNextBtnClick(e:MouseEvent):void {
+			Controller.instance.next();
+		}
+		
+		private function configStageListener():void {
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, onStageFullScreen, false, 0, true);
 			if(VcastrConfig.controlPanelMode==VcastrConfig.FLOAT){
 				stage.addEventListener(Event.MOUSE_LEAVE, onStageMouseLeave, false, 0, true);
@@ -95,54 +195,27 @@
 			}
 		}
 		
+		private function onProgressSliderMouseDown(e:MouseEvent):void {
+			TweenLite.killTweensOf(_progressSlider);
+		}
+		
+		private function onOpenListBtn(e:MouseEvent):void {
+			Controller.instance.openCloseList();
+		}
+		
 		private function onStageMouseOver(e:MouseEvent):void {
-			TweenLite.to(this, .5, { alpha:1 } );
+			TweenLite.to(this, .5, { autoAlpha:1 } );
 		}
 		
 		private function onStageMouseLeave(e:Event):void {
-			TweenLite.to(this, .5, { alpha:0 } );
+			TweenLite.to(this, .5, { autoAlpha:0 } );
 		}
-		private function onStageFullScreen(e:FullScreenEvent) {
+		private function onStageFullScreen(e:FullScreenEvent):void {
 			if (stage.displayState == StageDisplayState.NORMAL) {
 				_fullScreenBtn.frame = 2;
 			}else {
 				_fullScreenBtn.frame = 1;
 			}
-		}
-		private function configVcastr3Listener():void {
-			_vcastr3.addEventListener(VideoEvent.INIT, onVcastrInit, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.PLAYHEAD_UPDATE, onVcastrPlayHeadUpdate, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.PAUSED, onVcastrPaused, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.STOP, onVcastrStopped, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.PLAYING, onVcastrPlaying, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.PROGRESS , onVcastrProgress, false, 0, true);
-			_vcastr3.addEventListener(VideoEvent.COMPLETE, onVcastrComplete, false, 0, true);
-		}
-		private function onVcastrPaused(e:Event):void {
-			_playPauseBtn.frame = 1;
-		}
-		private function onVcastrStopped(e:Event):void {
-			_playPauseBtn.frame = 1;
-		}
-		private function onVcastrPlaying(e:Event):void {
-			_playPauseBtn.frame = 2;
-		}
-		private function onVcastrInit(e:Event):void {
-			configListener();
-		}
-		private function onVcastrPlayHeadUpdate(e:Event):void {
-			_currentTimeText.text = formatTime(Math.round(_vcastr3.videoPlayer.playheadTime));
-			_totalTimeText.text = formatTime(Math.round(_vcastr3.videoPlayer.totalTime));
-			if (!_progressSlider.isDrag) {
-				_progressSlider.value = _vcastr3.videoPlayer.playheadTime / _vcastr3.videoPlayer.totalTime;
-			}	
-		}
-		private function onVcastrProgress(e:Event):void {
-			_progressSlider.persent = _vcastr3.videoPlayer.bytesLoaded / _vcastr3.videoPlayer.bytesTotal;
-			_progressSlider.couldDragPersent = _vcastr3.videoPlayer.bytesLoaded / _vcastr3.videoPlayer.bytesTotal;
-		}
-		private function onVcastrComplete(e:Event):void {
-			_vcastr3.videoPlayer.gotoBegin();
 		}
 		private function onFullScreenBtnClick(e:MouseEvent):void {
 			if (stage.displayState == StageDisplayState.NORMAL) {
@@ -154,68 +227,64 @@
 			}
 		}
 		private function onAddedToStage(e:Event):void {
-			init()
-		}
-		private function onStageResize(e:Event):void {
-			setPosition();
+			configStageListener();
 		}
 		private function onProgressSliderChange(e:Event):void {
-			TweenLite.killDelayedCallsTo(_vcastr3.videoPlayer.seekPersent);
-			TweenLite.delayedCall(.3, _vcastr3.videoPlayer.seekPersent, [_progressSlider.value]);
+			TweenLite.killDelayedCallsTo(Controller.instance.seekPersent);
+			TweenLite.delayedCall(.3, Controller.instance.seekPersent, [_progressSlider.value]);
 		}
-		private function onVolumnSliderChange(e:Event):void {		
-			if (_volumnSlider.value < 0.05) {
-				_volumnSlider.value = 0;
-				_volumnBtn.frame = 2;
-			} else {
-				_volumnBtn.frame = 1;
-			}
-			_vcastr3.videoPlayer.volume = _volumnSlider.value;
+		private function onVolumnSliderChange(e:Event):void {
+			Controller.instance.voluemTo(_volumnSlider.value);
 		}
 		private function onVolumnBtnClick(e:MouseEvent):void {
-			if (_vcastr3.videoPlayer.volume > 0.05) {
-				_vcastr3.videoPlayer.volume = 0;
-				_volumnBtn.frame = 2;
-			}else {
-				_vcastr3.videoPlayer.volume = .8;				
-				_volumnBtn.frame = 1;
-			}
-			_volumnSlider.value = _vcastr3.videoPlayer.volume;
+			Controller.instance.soundOnOff();
 		}
 		private function onPlayPauseBtnClick(e:MouseEvent):void {
-			_vcastr3.videoPlayer.playPause();
-		}
-		private function setPosition():void {
-			if (VcastrConfig.controlPanelMode != "bottom") {
-				_vcastr3.playerSizeTo(stage.stageWidth, stage.stageHeight);
-				if (_vcastr3.videoPlayer.playerWidth > 600) {
-					panelWidth = 600;
-					x = (_vcastr3.videoPlayer.playerWidth - 600) / 2;
-				}else {
-					panelWidth = _vcastr3.videoPlayer.playerWidth - _panelHeight - 15;
-					x = 15;
-				}				
-				y = _vcastr3.videoPlayer.playerHeight - 30;
-			}else {				
-				_vcastr3.playerSizeTo(stage.stageWidth, stage.stageHeight - _panelHeight);
-				panelWidth = _vcastr3.videoPlayer.playerWidth;
-				y = _vcastr3.videoPlayer.playerHeight - _panelHeight;
-			}
-			
-		}
-		private function init():void {			
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
-			_vcastr3 = parent as Vcastr3;
-			_vcastr3.videoPlayer.volume = .8;
-			bulidUI();
-			setPosition();
-			configVcastr3Listener();
+			Controller.instance.playPause();
 		}
 		public function set panelWidth(w:Number):void {
 			_panelWidth = w;
 			setLayout();
+		}
+		
+		static public function get instance():DefaultControlPanel {
+			return _instance;
+		}
+		
+		public function setToPausedState():void {
+			_playPauseBtn.frame = 1;
+		}
+		public function setToStopState():void {
+			_playPauseBtn.frame = 1;
+		}
+		public function setToPlayingState():void {
+			_playPauseBtn.frame = 2;
+		}
+		public function setPlayHeadState(playheadTime:Number,totalTime:Number):void {
+			_currentTimeText.text = formatTime(Math.round(playheadTime));
+			_totalTimeText.text = formatTime(Math.round(totalTime));
+			_progressSlider.value = playheadTime / totalTime;
+		}
+		public function setProgressState(bytesLoaded:Number,bytesTotal:Number):void {
+			_progressSlider.persent = bytesLoaded / bytesTotal;
+			_progressSlider.couldDragPersent = bytesLoaded / bytesTotal;
+		}
+		public function get volumnBtn():IconGlowBtn {
+			return _volumnBtn
+		}
+		public function get volumnSlider():Slider {
+			return _volumnSlider
+		}
+		public function get panelHeight():int {
+			return _panelHeight
+		}
+		
+		public function get prevBtn():IconGlowBtn {
+			return _prevBtn;
+		}
+		
+		public function get nextBtn():IconGlowBtn {
+			return _nextBtn;
 		}
 	}	
 }

@@ -1,16 +1,18 @@
 ﻿package com.ruochi.video{
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
-	import fl.motion.easing.*
+	import fl.motion.easing.*;
 	import gs.TweenFilterLite;
 	import gs.TweenLite;
 	import com.ruochi.shape.Rect;
 	import com.ruochi.layout.setCenter;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.utils.setColor;
+	import fl.motion.easing.*
 	public class IconGlowBtn extends Sprite {
 		private var _enable:Boolean = true;
 		private var _frame:int = 1;
@@ -23,15 +25,11 @@
 			_btnHeight = h;
 			init();
 		}
-		private function onOverEffect(e:Event):void  {			
-			if (_enable != false) {
-				TweenFilterLite.to(_iconWrapper, .8, { glowFilter:{color:VcastrConfig.controlPanelBtnGlowColor, alpha:.7, blurX:3, blurY:3,strength:3} , overwrite:true } );
-			}
+		private function onOverEffect(e:Event):void  {	
+			TweenFilterLite.to(_iconWrapper, 1, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:1, blurX:4, blurY:4, strength:3 }, ease:Elastic.easeOut,  overwrite:true } );
 		}
-		private function onOutEffect(e:Event):void  {			
-			if (_enable != false) {
-				TweenFilterLite.to(_iconWrapper, .8, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:0, blurX:2, blurY:2 , strength:3 }, overwrite:true } );
-			}
+		private function onOutEffect(e:Event):void  {		
+			TweenFilterLite.to(_iconWrapper, .8, { glowFilter: { color:VcastrConfig.controlPanelBtnGlowColor, alpha:0, blurX:2, blurY:2 , strength:3}, overwrite:true } );
 		}
 		private function onClickEffect(e:MouseEvent) :void {
 			if (_enable != false) {
@@ -43,7 +41,7 @@
 			buildUI();
 		}
 		private function buildUI():void  {			
-			_clickArea.buttonMode = true;
+			buttonMode = true;
 			_clickArea.width = _btnWidth;
 			_clickArea.height = _btnHeight;			
 			_clickArea.alpha = 0;
@@ -55,17 +53,17 @@
 			addChild(_clickArea);		
 		}
 		private function configListener():void  {
-			_clickArea.addEventListener(MouseEvent.MOUSE_OVER, onOverEffect, false, 0, true);
-			_clickArea.addEventListener(FocusEvent.FOCUS_IN, onOverEffect, false, 0, true);
-			_clickArea.addEventListener(FocusEvent.FOCUS_OUT, onOutEffect, false, 0, true);
-			_clickArea.addEventListener(MouseEvent.MOUSE_OUT, onOutEffect, false, 0, true);
-			_clickArea.addEventListener(MouseEvent.MOUSE_DOWN, onClickEffect, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OVER, onOverEffect, false, 0, true);
+			addEventListener(FocusEvent.FOCUS_IN, onOverEffect, false, 0, true);
+			addEventListener(FocusEvent.FOCUS_OUT, onOutEffect, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OUT, onOutEffect, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_DOWN, onClickEffect, false, 0, true);
 		}
 		public function set enable(en:Boolean):void  {
 			if (en) {				
-				TweenLite.to(this,.5,{alpha:1});
+				TweenLite.to(this,.5,{alpha:1, overwrite:false});
 			} else {
-				TweenLite.to(this,.5,{alpha:.2});
+				TweenLite.to(this,.5,{alpha:.2, overwrite:false});
 			}
 			_enable = en;
 			mouseEnabled = _enable;
@@ -74,7 +72,7 @@
 		public function get enable():Boolean {
 			return _enable;
 		}
-		public function set icon(icon:Sprite) {
+		public function set icon(icon:Shape):void {
 			setCenter(icon, _clickArea)
 			setColor(icon, VcastrConfig.controlPanelBtnColor);
 			if (_iconWrapper.numChildren > 0) {

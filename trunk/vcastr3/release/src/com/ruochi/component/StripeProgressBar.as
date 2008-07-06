@@ -26,7 +26,7 @@
 			_color2 = c2;
 			buildUI();			
 		}
-		private function buildUI() {
+		private function buildUI():void {
 			_bg = new Rect(_barWidth + _barHeight * 4, _barHeight);
 			_bg.alpha = 0;
 			_mask = new Rect(_barWidth, _barHeight);
@@ -45,20 +45,20 @@
 			addChild(_border1);
 			addChild(_border2)
 		}
-		private function onEnterFrame(e:Event) {
+		private function onEnterFrame(e:Event):void{
 			_stripeShape.x += _speed;
 			if (_stripeShape.x >= _barHeight*2) {
 				_stripeShape.x = 0;
 			}
 		}
-		public function start() {
+		public function start():void {
 			if (!_isStart) {
 				visible = true;
 				addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
 				_isStart = true;
 			}		
 		}
-		public function stop() {
+		public function stop():void {
 			visible = false;
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			_isStart = false;

@@ -1,7 +1,6 @@
 ﻿package com.ruochi.video {
 	import com.ruochi.shape.Rect;
 	import com.ruochi.video.ScaleUtils;
-	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.video.VideoEvent;
 	import flash.events.Event;
 	import flash.media.Video;
@@ -21,21 +20,29 @@
 		private var _netConnetction:NetConnection = new NetConnection();
 		private var _url:String;
 		private var _state:String;
-		private var _timer:Timer = new Timer(1000, 0);
+		private var _timer:Timer = new Timer(100, 0);
 		private var _duration:Number;
 		private var _bg:Rect = new Rect(100, 100, 0);
 		private var _playerWidth:Number;
 		private var _playerHeight:Number;
 		private var _isVideoInit:Boolean = false;
 		private var _metadata:Object;
-		private var _soundTransform:SoundTransform = new SoundTransform(VcastrConfig.defautVolume);
+		private var _soundTransform:SoundTransform = new SoundTransform();
 		private var _isBuffering:Boolean = false;
 		private var _client:Object = new Object;
 		private var _dataXml:XML;
+		private var _isAutoPlay:Boolean;
+		private var _scaleMode:String;
+		private var _isLoadBegin:Boolean = true;
+		private static var _instance:VideoPlayer = new VideoPlayer();
 		public function VideoPlayer(w:int = 320, h:int = 240) {
-			_playerWidth = w;
-			_playerHeight = h;
-			init();
+			if (!_instance) {
+				_playerWidth = w;
+				_playerHeight = h;
+				init();
+			}else {
+				throw new Error("singleton");
+			}
 		}
 		private function init():void {
 			_video.smoothing = true;
@@ -43,7 +50,7 @@
             _netConnetction.connect(null);			
 			_netStream = new NetStream(_netConnetction);
             _netStream.client = _client;
-			_netStream.bufferTime = VcastrConfig.bufferTime;
+			_netStream.bufferTime = 4;
 			_video.attachNetStream(_netStream);
 			configListener();
 			addChild(_bg);
@@ -67,29 +74,35 @@
 			_netStream.addEventListener(NetStatusEvent.NET_STATUS, onNetStreamStatus, false, 0, true);
 		}
 		private function onNetStreamStatus(e:NetStatusEvent):void {
-			switch (e.info.code) {
+			switch (e.info.code) { 
 			case "NetConnection.Connect.Success":
 				break;
 			case "NetStream.Play.StreamNotFound":
-				SimpleAlert.text = "Moive not found"
+				SimpleAlert.text = _url + "Moive not found"
 				break;
 			case "NetStream.Buffer.Flush":
+				
+			case "NetStream.Play.Start":
+				break;			
+			
+			case "NetStream.Play.Stop":
 				resetParam();
-				VcastrConfig.isAutoPlay = false;
+				_isAutoPlay = false;
                 load();				
 				dispatchEvent(new VideoEvent(VideoEvent.COMPLETE, false, false, _state, playheadTime));
 				break;
-			case "NetStream.Play.Start":
-				break;			
 			}
 		}
 		private function onTimer(e:TimerEvent):void {
-			if (!_isVideoInit && _video.videoWidth) {
-				videoInit();
+			if(_timer.currentCount%10==0){
+				if (!_isVideoInit && _video.videoWidth) {
+					videoInit();
+				}
+				dispatchEvent(new VideoEvent(VideoEvent.PROGRESS, false, false, _state, playheadTime));
+				dispatchEvent(new VideoEvent(VideoEvent.PLAYHEAD_UPDATE, false, false, _state, playheadTime));
+				checkBuffer();
 			}
-			dispatchEvent(new VideoEvent(VideoEvent.PROGRESS, false, false, _state, playheadTime));
-			dispatchEvent(new VideoEvent(VideoEvent.PLAYHEAD_UPDATE, false, false, _state, playheadTime));
-			checkBuffer();
+			dispatchEvent(new VideoEvent(VideoEvent.MINI_PLAYHEAD_UPDATE, false, false, _state, playheadTime));
 		}
 		private function checkBuffer():void {
 			if (_netStream.bufferLength < .5 && _isBuffering == false) {
@@ -103,7 +116,7 @@
 		private function videoInit():void {
 			_video.visible = true;
 			setSize(_playerWidth, _playerHeight);
-			if (VcastrConfig.isAutoPlay) {
+			if (_isAutoPlay) {
 				play()
 			}else {
 				pause();
@@ -124,11 +137,11 @@
 			_playerHeight = h;
 			_bg.width = w;
 			_bg.height = h;
-			if (VcastrConfig.scaleMode == ScaleUtils.NO_BORDER) {
+			if (_scaleMode == ScaleUtils.NO_BORDER) {
 				ScaleUtils.fillNoBorder(_video, _bg);
-			}else if (VcastrConfig.scaleMode == ScaleUtils.NO_SCALE) {
+			}else if (_scaleMode == ScaleUtils.NO_SCALE) {
 				ScaleUtils.fillNoScale(_video, _bg);
-			}else if (VcastrConfig.scaleMode == ScaleUtils.EXACT_FIT) {
+			}else if (_scaleMode == ScaleUtils.EXACT_FIT) {
 				ScaleUtils.fillExactFit(_video, _bg);
 			}else {				
 				ScaleUtils.fillShowAll(_video, _bg); 
@@ -144,7 +157,8 @@
 		}
 		public function load():void {
 			_netStream.play(_url)
-			_timer.start();			
+			_timer.start();
+			dispatchEvent(new VideoEvent(VideoEvent.LOADING, false, false, _state, playheadTime));	
 			//setState(VideoEvent.LOADING);
 		}
 		public function pause():void {
@@ -219,7 +233,7 @@
 		}
 		public function set url(u:String):void {
 			_url = u;
-			if (VcastrConfig.isLoadBegin) {
+			if (_isLoadBegin) {
 				load();
 			}
 		}
@@ -229,6 +243,27 @@
 			if (_dataXml.duration[0] != undefined) {
 				_duration = _dataXml.duration[0]
 			}
+		}
+		public function get dataXml():XML {
+			return _dataXml;
+		}
+		public function set isAutoPlay(b:Boolean):void {
+			_isAutoPlay = b;
+		}
+		public function set defaultVoluem(v:Number):void {
+			_soundTransform.volume = v;
+		}
+		public function set bufferTime(v:Number):void {
+			_netStream.bufferTime = v;
+		}
+		public function set scaleMode(s:String):void {
+			_scaleMode = s;
+		}
+		public function set isLoadBegin(b:Boolean):void {
+			_isLoadBegin = b;
+		}
+		static public function get instance():VideoPlayer {
+			return _instance;
 		}
 	}	
 }
