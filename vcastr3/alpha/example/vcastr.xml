@@ -36,12 +36,15 @@
 			<logoTextLink>http://www.ruochigroup.com</logoTextLink>
 			<logoTextColor>0xffffff</logoTextColor>
 			<textMargin>20 20 auto auto</textMargin>
-			<logoClipUrl>Developer.png</logoClipUrl>
+			<logoClipUrl></logoClipUrl>
 			<logoClipAlpha>1</logoClipAlpha>
 			<clipMargin>20 auto auto 20</clipMargin>
 		</logoPlugIn>
 		<javaScriptPlugIn>
 			<url>javaScriptPlugIn.swf</url>
 		</javaScriptPlugIn>
+		<formatSourceUrlPlugIn>
+			<url>formatSourceUrlPlugIn.swf</url>
+		</formatSourceUrlPlugIn>
 	</plugIns>
 </vcastr>
