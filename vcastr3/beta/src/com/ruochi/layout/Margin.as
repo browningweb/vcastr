@@ -1,11 +1,11 @@
 ﻿package com.ruochi.layout {
 	public class Margin {
 		public static const AUTO:String = "auto";
-		private var _top;
-		private var _bottom;
-		private var _left;
-		private var _right;
-		public function Margin(t = null, r = null, b = null, l = null) {
+		private var _top:Object;
+		private var _bottom:Object;
+		private var _left:Object;
+		private var _right:Object;
+		public function Margin(t:Object = null, r:Object = null, b:Object = null, l:Object = null) {
 			if (String(t).indexOf(" ") > 0) {
 				var array:Array = String(t).split(" ");
 				top = array[0];
@@ -19,8 +19,8 @@
 				left = l;
 			}
 		}
-		public function set top(t):void {
-			_top = checkIsAuto(t) ? AUTO : t; 
+		public function set top(t:Object):void {
+			_top = checkIsAuto(String(t)) ? AUTO : t; 
 		}
 		public function get top():Object {
 			if (_top == AUTO) {
@@ -29,8 +29,8 @@
 				return Number(_top);
 			}			
 		}
-		public function set bottom(b):void {
-			_bottom = checkIsAuto(b) ? AUTO : b; 
+		public function set bottom(b:Object):void {
+			_bottom = checkIsAuto(String(b)) ? AUTO : b; 
 		}
 		public function get bottom():Object {
 			if (_bottom == AUTO) {
@@ -39,8 +39,8 @@
 				return Number(_bottom);
 			}	
 		}
-		public function set left(l):void {
-			_left = checkIsAuto(l) ? AUTO : l; 
+		public function set left(l:Object):void {
+			_left = checkIsAuto(String(l)) ? AUTO : l; 
 		}
 		public function get left():Object {
 			if (_left == AUTO) {
@@ -49,8 +49,8 @@
 				return Number(_left);
 			}	
 		}
-		public function set right(r):void {
-			_right = checkIsAuto(r) ? AUTO : r; 
+		public function set right(r:Object):void {
+			_right = checkIsAuto(String(r)) ? AUTO : r; 
 		}
 		public function get right():Object {
 			if (_right == AUTO) {

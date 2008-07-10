@@ -23,8 +23,8 @@
 		public static var xml:String = "vcastr.xml";
 		public static var isMulitVideo:Boolean = false;
 		public static var textItemHeight:Number = 24;
-		public static var multiVideoCompactBoundary = 240;
-		public static var singleVideoCompactBoundary = 180;
+		public static var multiVideoCompactBoundary:int = 240;
+		public static var singleVideoCompactBoundary:int = 180;
 		public static var isRepeat:Boolean = false;
 	}	
 }

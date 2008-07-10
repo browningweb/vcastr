@@ -7,11 +7,18 @@
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.text.Font;
+	
 	public class Vcastr3 extends Sprite {
 		private static var _instance:Vcastr3;
+		[Embed(source = "../../../font/SG16.TTF", fontName = "SG16", mimeType = "application/x-font", unicodeRange = "U+0030-U+003A")]
+		private var myFont:Class;
 		public function Vcastr3() {
 			if (!_instance) {
-				_instance = this;			
+				_instance = this;
+				if (myFont) {
+					Font.registerFont(myFont);
+				}
 				init();
 			}else {
 				throw new Error("singleton");
@@ -23,7 +30,7 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE
 			stage.addChild(SimpleAlert.instance);
 			addChild(VideoPlayer.instance);
-			Controller.instance.loadConfig(loaderInfo.parameters["xml"]);trace(loaderInfo.parameters["xml"],'----')
+			Controller.instance.loadConfig(loaderInfo.parameters["xml"]);
 			stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
 		}
 		
