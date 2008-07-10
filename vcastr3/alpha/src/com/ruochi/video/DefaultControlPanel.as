@@ -17,6 +17,7 @@
 	import flash.display.StageScaleMode;
 	import flash.display.StageDisplayState;
 	import flash.events.FullScreenEvent;
+	import flash.text.AntiAliasType;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.utils.formatTime;
 	import gs.TweenLite;
@@ -79,6 +80,8 @@
 			textField.text = "00:00";
 			textField.size = 10;
 			textField.y = 2;
+			textField.antiAliasType = AntiAliasType.ADVANCED;
+			textField.sharpness = 400;
 		}
 		private function setLayout():void {
 			var isCompact:Boolean = false;
