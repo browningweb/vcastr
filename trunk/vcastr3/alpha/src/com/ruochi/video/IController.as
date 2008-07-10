@@ -12,7 +12,7 @@
 		function stop () : void;
 		function ff () : void;
 		function rew () : void;
-		function gotoVideoAt (id) : void;
+		function gotoVideoAt (id:int) : void;
 		function openCloseList () : void;
 		function soundOnOff () : void;
 		function voluemTo (value:Number) : void;

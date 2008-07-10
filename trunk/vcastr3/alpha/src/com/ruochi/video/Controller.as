@@ -238,7 +238,7 @@
 			VideoPlayer.instance.rew();
 		}
 		
-		public function gotoVideoAt(id):void {
+		public function gotoVideoAt(id:int):void {
 			_activeVideoId = id;
 			VideoPlayer.instance.isAutoPlay = true;
 			VideoPlayer.instance.dataXml = VcastrConfig.dataXml.channel.item[_activeVideoId];
