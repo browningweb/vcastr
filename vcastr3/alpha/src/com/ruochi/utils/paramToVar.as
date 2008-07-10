@@ -1,7 +1,7 @@
 ﻿package com.ruochi.utils {
 	import com.ruochi.utils.isNum;
 	public function  paramToVar(paramObject:Object, varObject:Object):void {
-		for (var name in paramObject) {
+		for (var name:String in paramObject) {
 			if (paramObject[name] == "true") {
 				varObject[name] = true;
 			}else if(paramObject[name] == "false") {
