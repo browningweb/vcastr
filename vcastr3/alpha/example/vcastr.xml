@@ -40,11 +40,11 @@
 			<logoClipAlpha>1</logoClipAlpha>
 			<clipMargin>20 auto auto 20</clipMargin>
 		</logoPlugIn>
-		<javaScriptPlugIn>
+		<!--javaScriptPlugIn>
 			<url>javaScriptPlugIn.swf</url>
 		</javaScriptPlugIn>
 		<formatSourceUrlPlugIn>
 			<url>formatSourceUrlPlugIn.swf</url>
-		</formatSourceUrlPlugIn>
+		</formatSourceUrlPlugIn-->
 	</plugIns>
 </vcastr>
