@@ -2,14 +2,14 @@
 <project>
   <!-- Output SWF options -->
   <output>
-    <movie disabled="True" />
+    <movie disabled="False" />
     <movie input="" />
     <movie path="example\vcastr3.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="360" />
+    <movie height="270" />
     <movie version="9" />
-    <movie background="#FFFFFF" />
+    <movie background="#000000" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -61,7 +61,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <!-- example: <compile path="..." /> -->
+    <compile path="src\com\ruochi\video\Vcastr3.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
