@@ -1,0 +1,22 @@
+%!Adobe-FontList 1.11
+%Locale:0x804
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:SG16
+FamilyName:SG16
+StyleName:Regular
+FullName:SG16
+MenuName:SG16
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\project\svn\code\vcastr\vcastr3\alpha\src\Font\SG16.TTF
+DataFormat:sfntData
+FileLength:18188
+FileModTime:1215684306
+WeightClass:400
+WidthClass:5
+AngleClass:0
+%EndFont
+

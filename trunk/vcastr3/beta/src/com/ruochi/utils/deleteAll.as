@@ -1,8 +1,8 @@
 ﻿package com.ruochi.utils{
-	import flash.display.Sprite;
-	public function deleteAll(sp:Sprite) {
-		while (sp.numChildren) {
-			sp.removeChildAt(0);
+	import flash.display.DisplayObjectContainer;
+	public function deleteAll(displayObjectContainer:DisplayObjectContainer):void {
+		while (displayObjectContainer.numChildren) {
+			displayObjectContainer.removeChildAt(0);
 		}
 	}
 }

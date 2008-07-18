@@ -115,7 +115,7 @@
 		}
 		private function videoInit():void {
 			_video.visible = true;
-			setSize(_playerWidth, _playerHeight);
+			setSize(_playerWidth, _playerHeight);trace(_isAutoPlay)
 			if (_isAutoPlay) {
 				play()
 			}else {

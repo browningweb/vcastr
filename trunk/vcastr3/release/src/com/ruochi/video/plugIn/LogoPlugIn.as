@@ -43,7 +43,7 @@
 					_rect.width = _logoText.width;
 					_rect.height = _logoText.height;
 					_logoTextWrapper.addChild(_rect);
-					_logoTextWrapper.buttonMode = true; trace(LogoPlugInConfig.logoTextLink)
+					_logoTextWrapper.buttonMode = true; 
 					_logoTextWrapper.useHandCursor =  true;
 					_logoTextWrapper.addEventListener(MouseEvent.CLICK, onLogoTextWrapperClick, false, 0, true);
 				}
