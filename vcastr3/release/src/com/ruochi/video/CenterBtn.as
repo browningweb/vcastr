@@ -116,7 +116,7 @@
 			_playPauseBtn.frame = 2;
 			_playPauseBtn.visible = false;
 		}
-		static function get instance():CenterBtn {
+		public static function get instance():CenterBtn {
 			return _instance;
 		}
 	}	

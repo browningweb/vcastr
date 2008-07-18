@@ -144,6 +144,7 @@
 		private function onVideoPlayerComplete(e:VideoEvent):void {
 			if (_activeVideoId == VcastrConfig.dataXml.channel.item.source.length() - 1) {
 				if (VcastrConfig.isRepeat) {
+					VideoPlayer.instance.isAutoPlay = true;
 					gotoVideoAt(0);
 				}
 			}else {
@@ -238,9 +239,8 @@
 			VideoPlayer.instance.rew();
 		}
 		
-		public function gotoVideoAt(id):void {
+		public function gotoVideoAt(id:int):void {
 			_activeVideoId = id;
-			VideoPlayer.instance.isAutoPlay = true;
 			VideoPlayer.instance.dataXml = VcastrConfig.dataXml.channel.item[_activeVideoId];
 			TextItemList.instance.activeId = _activeVideoId;
 			if (VcastrConfig.isMulitVideo) {
@@ -295,13 +295,15 @@
 		}
 		
 		public function next():void {
-			if (_activeVideoId < VcastrConfig.dataXml.channel.item.length()-1) {
+			if (_activeVideoId < VcastrConfig.dataXml.channel.item.length() - 1) {
+				VideoPlayer.instance.isAutoPlay = true;
 				gotoVideoAt(_activeVideoId+1)
 			}
 		}
 		
 		public function prev():void {
 			if (_activeVideoId > 0) {
+				VideoPlayer.instance.isAutoPlay = true;
 				gotoVideoAt(_activeVideoId-1)
 			}
 		}
