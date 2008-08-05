@@ -57,7 +57,7 @@
 				configListener();
 				if (VcastrConfig.controlPanelMode!=VcastrConfig.NONE) {
 					Vcastr3.instance.addChild(DefaultControlPanel.instance);
-					Vcastr3.instance.setChildIndex(CenterBtn.instance,2);
+					//Vcastr3.instance.setChildIndex(CenterBtn.instance,2);
 				}
 				if (VcastrConfig.isShowAbout) {
 					about(Vcastr3.instance, "About Vcastr 3.0", "http://code.google.com/p/vcastr/");

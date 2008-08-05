@@ -28,7 +28,7 @@
 		<isRepeat>false</isRepeat>
 	</config>
 	<plugIns>
-		<logoPlugIn>
+		<!--logoPlugIn>
 			<url>logoPlugIn.swf</url>
 			<logoText>www.ruochi.com</logoText>
 			<logoTextAlpha>0.75</logoTextAlpha>
@@ -39,7 +39,7 @@
 			<logoClipUrl></logoClipUrl>
 			<logoClipAlpha>1</logoClipAlpha>
 			<clipMargin>20 auto auto 20</clipMargin>
-		</logoPlugIn>
+		</logoPlugIn-->
 		<!--javaScriptPlugIn>
 			<url>javaScriptPlugIn.swf</url>
 		</javaScriptPlugIn>

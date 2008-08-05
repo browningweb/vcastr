@@ -24,7 +24,7 @@
 	import com.ruochi.video.VideoEvent;
 	import com.ruochi.video.TextItemList;
 	import com.ruochi.layout.Margin;
-	import fl.motion.easing.Linear;
+	import com.robertpenner.easing.Linear;
 	public class DefaultControlPanel extends Sprite {
 		private var _panelWidth:int = 300;
 		private var _panelHeight:int = 17;
