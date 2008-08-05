@@ -6,13 +6,12 @@
 <flex-config>
   <compiler>
     <source-path append="true">
-      <path-element>E:\svn\code\vcastr\trunk\vcastr3\alpha\src</path-element>
-      <path-element>D:\as3class</path-element>
-      <path-element>C:\Users\ruochi\AppData\Local\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>L:\ruochi\code\vcastr\vcastr3\alpha\src</path-element>
+      <path-element>C:\Documents and Settings\Administrator\Local Settings\Application Data\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>E:\svn\code\vcastr\trunk\vcastr3\alpha\src\com\ruochi\video\Vcastr3.as</path-element>
+    <path-element>L:\ruochi\code\vcastr\vcastr3\alpha\src\com\ruochi\video\Vcastr3.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
   <default-frame-rate>30</default-frame-rate>

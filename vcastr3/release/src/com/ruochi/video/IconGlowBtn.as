@@ -5,14 +5,13 @@
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
-	import fl.motion.easing.*;
+	import com.robertpenner.easing.*
 	import gs.TweenFilterLite;
 	import gs.TweenLite;
 	import com.ruochi.shape.Rect;
 	import com.ruochi.layout.setCenter;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.utils.setColor;
-	import fl.motion.easing.*
 	public class IconGlowBtn extends Sprite {
 		private var _enable:Boolean = true;
 		private var _frame:int = 1;
