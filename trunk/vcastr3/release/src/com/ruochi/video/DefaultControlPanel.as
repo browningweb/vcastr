@@ -25,6 +25,8 @@
 	import com.ruochi.video.TextItemList;
 	import com.ruochi.layout.Margin;
 	import com.robertpenner.easing.Linear;
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
 	public class DefaultControlPanel extends Sprite {
 		private var _panelWidth:int = 300;
 		private var _panelHeight:int = 17;
@@ -43,6 +45,7 @@
 		private var _defualtVoluem:Number = .8;
 		private var _textItemList:TextItemList = TextItemList.instance;
 		private var _margin:Margin = new Margin(0, 5, 0, 5);
+		private var _timer:Timer = new Timer(3000, 1);
 		private static var _instance:DefaultControlPanel = new DefaultControlPanel();
 		public function DefaultControlPanel() {
 			if (!_instance) {
@@ -216,10 +219,28 @@
 		private function onStageFullScreen(e:FullScreenEvent):void {
 			if (stage.displayState == StageDisplayState.NORMAL) {
 				_fullScreenBtn.frame = 2;
+				_timer.removeEventListener(TimerEvent.TIMER, onTimer);
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
+				TweenLite.to(this, .5, { autoAlpha:1 } );
 			}else {
 				_fullScreenBtn.frame = 1;
+				_timer.addEventListener(TimerEvent.TIMER, onTimer, false, 0, true);				
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove, false, 0, true);
+				_timer.reset();
+				_timer.start();
 			}
 		}
+		
+		private function onStageMouseMove(e:MouseEvent):void {			
+			_timer.reset();
+			_timer.start();
+			TweenLite.to(this, .5, { autoAlpha:1 } );
+		}
+		
+		private function onTimer(e:TimerEvent):void {
+			TweenLite.to(this, .5, { autoAlpha:0 } );
+		}
+		
 		private function onFullScreenBtnClick(e:MouseEvent):void {
 			if (stage.displayState == StageDisplayState.NORMAL) {
 				stage.displayState = StageDisplayState.FULL_SCREEN;
