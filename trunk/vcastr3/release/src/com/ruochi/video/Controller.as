@@ -13,6 +13,7 @@
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.events.EventDispatcher;
 	import flash.net.navigateToURL;
 	public class Controller extends EventDispatcher implements IController {
@@ -31,10 +32,15 @@
 			for (var i:int = 0; i < length; i++) { 
 				var plugInLoader:Loader = new Loader();
 				plugInLoader.name = String(i);
-				plugInLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onPlugInLoaderComplete, false, 0, true)
+				plugInLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onPlugInLoaderComplete, false, 0, true);
+				plugInLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onPlugInLoaderIOError, false, 0, true);
 				plugInLoader.load(new URLRequest(VcastrConfig.dataXml.plugIns.*[i].url[0]));
 			}
 			startUp();
+		}
+		
+		private function onPlugInLoaderIOError(e:IOErrorEvent):void {
+			SimpleAlert.text = (e.target as LoaderInfo).loaderURL + " not found";
 		}
 		
 		private function onPlugInLoaderComplete(e:Event):void {
@@ -65,7 +71,8 @@
 				VideoPlayer.instance.scaleMode = VcastrConfig.scaleMode;
 				VideoPlayer.instance.isLoadBegin = VcastrConfig.isLoadBegin;
 				VideoPlayer.instance.bufferTime = VcastrConfig.bufferTime;
-				VideoPlayer.instance.defaultVoluem = VcastrConfig.defautVolume;
+				volumeTo(VcastrConfig.defautVolume);
+				//VideoPlayer.instance.defaultVoluem = VcastrConfig.defautVolume;
 				VideoPlayer.instance.isAutoPlay = VcastrConfig.isAutoPlay;
 				gotoVideoAt(_activeVideoId);
 				dispatchEvent(new VideoEvent(VideoEvent.INIT, false, false, VideoPlayer.instance.state,  VideoPlayer.instance.playheadTime));
@@ -276,7 +283,7 @@
 			DefaultControlPanel.instance.volumnSlider.value = VideoPlayer.instance.volume;
 		}
 		
-		public function voluemTo(value:Number):void {			
+		public function volumeTo(value:Number):void {			
 			if (value < 0.05) {
 				value = 0;
 				DefaultControlPanel.instance.volumnBtn.frame = 2;
@@ -284,6 +291,7 @@
 				DefaultControlPanel.instance.volumnBtn.frame = 1;
 			}			
 			VideoPlayer.instance.volume = value;
+			DefaultControlPanel.instance.volumnSlider.value = value;
 		}
 		
 		public function seek(offset:Number):void {

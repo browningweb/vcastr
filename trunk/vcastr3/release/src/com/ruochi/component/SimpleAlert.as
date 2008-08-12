@@ -26,6 +26,7 @@
 		}		
 		private function buildUI():void {
 			_textField.background = true;
+			_textField.htmlText = "<a href='http://www.ruochi.com'>www.ruochi.com</a>"
 			_textField.height = 10;
 			_textField.autoSize = "left";
 		}
