@@ -115,7 +115,7 @@
 		}
 		private function videoInit():void {
 			_video.visible = true;
-			setSize(_playerWidth, _playerHeight);trace(_isAutoPlay)
+			setSize(_playerWidth, _playerHeight);
 			if (_isAutoPlay) {
 				play()
 			}else {
@@ -251,7 +251,7 @@
 			_isAutoPlay = b;
 		}
 		public function set defaultVoluem(v:Number):void {
-			_soundTransform.volume = v;
+			_soundTransform.volume = v; trace(v,'cc')
 		}
 		public function set bufferTime(v:Number):void {
 			_netStream.bufferTime = v;

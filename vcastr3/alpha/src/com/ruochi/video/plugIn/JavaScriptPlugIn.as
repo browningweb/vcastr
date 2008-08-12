@@ -70,7 +70,7 @@
 		}
 		
 		private function volumeTo(value:Number) {
-			_controller.voluemTo(value);
+			_controller.volumeTo(value);
 		}
 		
 		private function playerSizeTo(w:Number, h:Number):void {
