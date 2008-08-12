@@ -15,7 +15,7 @@
 		function gotoVideoAt (id:int) : void;
 		function openCloseList () : void;
 		function soundOnOff () : void;
-		function voluemTo (value:Number) : void;
+		function volumeTo (value:Number) : void;
 		function seek (offset:Number) : void;
 		function seekPersent (per:Number) : void;
 		function next () : void;

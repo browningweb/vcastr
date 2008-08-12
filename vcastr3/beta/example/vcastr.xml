@@ -20,7 +20,7 @@
 		<controlPanelBtnColor>0xffffff</controlPanelBtnColor>
 		<contralPanelBtnGlowColro>0xffff00</contralPanelBtnGlowColro>
 		<controlPanelMode>normal</controlPanelMode>
-		<defautVolume>0.8</defautVolume>
+		<defautVolume>0.7</defautVolume>
 		<isAutoPlay>true</isAutoPlay>
 		<isLoadBegin>true</isLoadBegin>
 		<isShowAbout>true</isShowAbout>
@@ -28,7 +28,7 @@
 		<isRepeat>false</isRepeat>
 	</config>
 	<plugIns>
-		<logoPlugIn>
+		<!--logoPlugIn>
 			<url>logoPlugIn.swf</url>
 			<logoText>www.ruochi.com</logoText>
 			<logoTextAlpha>0.75</logoTextAlpha>
@@ -39,11 +39,11 @@
 			<logoClipUrl></logoClipUrl>
 			<logoClipAlpha>1</logoClipAlpha>
 			<clipMargin>20 auto auto 20</clipMargin>
-		</logoPlugIn>
+		</logoPlugIn-->
 		<!--javaScriptPlugIn>
 			<url>javaScriptPlugIn.swf</url>
-		</javaScriptPlugIn>
-		<formatSourceUrlPlugIn>
+		</javaScriptPlugIn-->
+		<!--formatSourceUrlPlugIn>
 			<url>formatSourceUrlPlugIn.swf</url>
 		</formatSourceUrlPlugIn-->
 	</plugIns>
