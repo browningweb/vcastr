@@ -258,7 +258,7 @@
 			TweenLite.delayedCall(.3, Controller.instance.seekPersent, [_progressSlider.value]);
 		}
 		private function onVolumnSliderChange(e:Event):void {
-			Controller.instance.voluemTo(_volumnSlider.value);
+			Controller.instance.volumeTo(_volumnSlider.value);
 		}
 		private function onVolumnBtnClick(e:MouseEvent):void {
 			Controller.instance.soundOnOff();
