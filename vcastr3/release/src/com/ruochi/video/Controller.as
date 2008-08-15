@@ -1,5 +1,6 @@
 ﻿package com.ruochi.video {
 	import com.ruochi.string.replaceHat;
+	import com.ruochi.string.replaceBraceToAngleBracket;
 	import com.ruochi.component.SimpleAlert;
 	import com.ruochi.video.VcastrConfig;
 	import com.ruochi.video.plugIn.IVcastrPlugIn;
@@ -170,8 +171,9 @@
 		}		
 
 		public function loadConfig(str:Object):void {
-			if(str){
-				VcastrConfig.xml = replaceHat(String(str));
+			if (str) {
+				VcastrConfig.xml = replaceBraceToAngleBracket(String(str));
+				VcastrConfig.xml = replaceHat(String(VcastrConfig.xml));
 			}
 			if (VcastrConfig.xml.indexOf("<") > -1) {
 				VcastrConfig.dataXml = new XML(VcastrConfig.xml); 
