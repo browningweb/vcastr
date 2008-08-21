@@ -22,7 +22,7 @@
 		<controlPanelMode>normal</controlPanelMode>
 		<defautVolume>0.7</defautVolume>
 		<isAutoPlay>true</isAutoPlay>
-		<isLoadBegin>true</isLoadBegin>
+		<isLoadBegin>false</isLoadBegin>
 		<isShowAbout>true</isShowAbout>
 		<scaleMode>showAll</scaleMode>
 		<isRepeat>false</isRepeat>
