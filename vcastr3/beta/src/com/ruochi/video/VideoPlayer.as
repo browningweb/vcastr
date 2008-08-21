@@ -156,10 +156,10 @@
 			}
 		}
 		public function load():void {
+			_isLoadBegin = true;
 			_netStream.play(_url)
 			_timer.start();
 			dispatchEvent(new VideoEvent(VideoEvent.LOADING, false, false, _state, playheadTime));	
-			//setState(VideoEvent.LOADING);
 		}
 		public function pause():void {
 			_netStream.pause();
