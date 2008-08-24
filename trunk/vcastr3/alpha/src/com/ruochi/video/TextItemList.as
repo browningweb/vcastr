@@ -28,6 +28,7 @@
 				textItem = new TextItem();
 				textItem.dataXml = _dataXml.channel.item[i];
 				textItem.addEventListener(MouseEvent.CLICK, onTextItemClick, false, 0, true);
+				textItem.y = (VcastrConfig.textItemHeight + 1) * i;
 				addChild(textItem);
 				if (textItem.width > maxW) {
 					maxW = textItem.width;
@@ -47,7 +48,7 @@
 		public function open():void {
 			for (var i:int = 0; i < _length; i++) {
 				(getChildAt(i) as TextItem).styleText.visible = true;
-				TweenLite.to(getChildAt(i), .2, { y: -(_length -i-1) * (VcastrConfig.textItemHeight + 1), autoAlpha:1 } ); 
+				TweenLite.to(getChildAt(i), .2, {autoAlpha:1, delay:i*.02 } ); 
 			}
 			_isOpen = true;
 		}
@@ -55,7 +56,7 @@
 		public function close():void {
 			for (var i:int = 0; i < _length; i++) {
 				(getChildAt(i) as TextItem).styleText.visible = false;
-				TweenLite.to(getChildAt(i), .2, { y: -((_length -i-1) + .5) * (VcastrConfig.textItemHeight + 1), autoAlpha:0 } ); 
+				TweenLite.to(getChildAt(i), .2, { autoAlpha:0, delay:i*.02 } ); 
 			}
 			_isOpen = false;
 		}
@@ -75,5 +76,7 @@
 			_activeId = id; 
 			(getChildAt(_activeId) as TextItem).isEnable = false;
 		}
+		
+		public function get length():int { return _length; }
 	}	
 }

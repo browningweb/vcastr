@@ -9,6 +9,7 @@
 	import flash.display.StageDisplayState;
 	import flash.events.TimerEvent;
 	import com.ruochi.video.IconGlowBtn;
+	import flash.filters.GlowFilter;
 	import gs.TweenLite;
 	import com.ruochi.video.VideoEvent;
 	import com.ruochi.component.StripeProgressBar;
@@ -46,6 +47,7 @@
 			buttonMode = true;
 			_playPauseBtn.icon = new PlayShape();
 			_playPauseBtn.icon = new PauseShape();
+			_playPauseBtn.filters = [new GlowFilter(0, 1, 3, 3)];
 			_playPauseBtn.scaleX = _playPauseBtn.scaleY = 2;
 			_bg.alpha = 0;
 			_progressBar.stripeShape.alpha = .5;
