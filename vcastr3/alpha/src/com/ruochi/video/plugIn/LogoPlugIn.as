@@ -57,6 +57,8 @@
 			_controller.addEventListener(VideoEvent.LAYOUT_CHANGE, onVcastrLayoutChange, false, 0, true);
 		}		
 		
+		
+		
 		private function onVcastrLayoutChange(e:Event):void {
 			setLayout();
 		}
@@ -73,14 +75,6 @@
 				_logoClipSprite.addEventListener(MouseEvent.CLICK, onlogoSpriteClick, false, 0, true);
 			}
 			setLayout();
-		}
-		
-		private function onlogoSpriteClick(e:MouseEvent):void {
-			navigateToURL(new URLRequest(LogoPlugInConfig.logoClipLink), LogoPlugInConfig.windowOpen);
-		}
-		
-		private function onLogoTextWrapperClick(e:MouseEvent):void {
-			navigateToURL(new URLRequest(LogoPlugInConfig.logoTextLink), LogoPlugInConfig.windowOpen);
 		}
 	}	
 }
