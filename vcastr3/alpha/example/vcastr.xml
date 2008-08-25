@@ -11,73 +11,7 @@
 			<source>http://www.transformersmovie.com/transformers_640.flv</source>
 			<duration></duration>
 			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		<item>
-			<source>http://www.transformersmovie.com/transformers_640.flv</source>
-			<duration></duration>
-			<title>Transformersmovie Trailer</title>
-		</item>
-		
+		</item>		
 	</channel>
 	<config>
 		<bufferTime>4</bufferTime>
@@ -106,12 +40,12 @@
 			<logoClipAlpha>1</logoClipAlpha>
 			<clipMargin>20 auto auto 20</clipMargin>
 		</logoPlugIn-->
-		<beginEndImagePlugIn>
+		<!--beginEndImagePlugIn>
 			<url>beginEndImagePlugIn.swf</url>
 			<source>beginSwfTest.swf</source>
 			<type>begin</type>
 			<scaleType>exactFit</scaleType>
-		</beginEndImagePlugIn>
+		</beginEndImagePlugIn-->
 		<!--javaScriptPlugIn>
 			<url>javaScriptPlugIn.swf</url>
 		</javaScriptPlugIn-->

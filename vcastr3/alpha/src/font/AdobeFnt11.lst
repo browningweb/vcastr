@@ -11,10 +11,10 @@ FullName:SG16
 MenuName:SG16
 StyleBits:0
 WritingScript:Roman
-OutlineFileName:E:\svn\code\vcastr\trunk\vcastr3\alpha\src\Font\SG16.TTF
+OutlineFileName:D:\project\svn\code\vcastr\vcastr3\alpha\src\Font\SG16.TTF
 DataFormat:sfntData
 FileLength:18188
-FileModTime:1206272198
+FileModTime:1218533374
 WeightClass:400
 WidthClass:5
 AngleClass:0

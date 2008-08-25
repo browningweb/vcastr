@@ -1,4 +1,5 @@
 ﻿package com.ruochi.video {
+	import com.ruochi.component.AutoScroll;
 	import com.ruochi.shape.player.FFShape;
 	import com.ruochi.shape.player.FullScreenOffShape;
 	import com.ruochi.shape.player.FullScreenOnShape;
@@ -43,9 +44,11 @@
 		private var _bg:Rect = new Rect(_panelWidth, _panelHeight, VcastrConfig.controlPanelBgColor);
 		private var _gap:int = 0;
 		private var _defualtVoluem:Number = .8;
+		private var _textItemListMask:Rect = new Rect(100, 100);
 		private var _textItemList:TextItemList = TextItemList.instance;
 		private var _margin:Margin = new Margin(0, 5, 0, 5);
 		private var _timer:Timer = new Timer(3000, 1);
+		private var _autoScroll:AutoScroll;
 		private static var _instance:DefaultControlPanel = new DefaultControlPanel();
 		public function DefaultControlPanel() {
 			if (!_instance) {
@@ -76,7 +79,9 @@
 			_bg.alpha = VcastrConfig.controlPanelAlpha;
 			_volumnSlider.sliderWidth = 30;
 			_volumnSlider.isSnap = true;			
-			_volumnSlider.value = _defualtVoluem;
+			_volumnSlider.value = _defualtVoluem;			
+			_autoScroll = new AutoScroll(_textItemList, _textItemListMask, AutoScroll.VERTICAL);
+			_textItemList.mask = _textItemListMask;
 		}
 		private function setTextField(textField:EmbedText):void {
 			textField.font = "SG16";
@@ -146,7 +151,11 @@
 			_volumnSlider.y = 4;
 			_progressSlider.y = 4;
 			_textItemList.x = _panelWidth;
-			_textItemList.y = -VcastrConfig.textItemHeight-1;
+			_textItemListMask.width = _panelWidth;		
+			_textItemListMask.height = Math.floor(Math.min(Math.min(_textItemList.length*(VcastrConfig.textItemHeight+1), 240), y) / (VcastrConfig.textItemHeight+1)) * (VcastrConfig.textItemHeight+1) -1;
+			_textItemListMask.y = - _textItemListMask.height-1;
+			_textItemList.y = _textItemListMask.y;
+			
 		}
 		private function addChindren():void {
 			addChild(_bg);
@@ -161,6 +170,7 @@
 				addChild(_nextBtn);
 				addChild(_prevBtn);
 				addChild(_openListBtn);
+				addChild(_textItemListMask);
 				addChild(_textItemList);
 			}
 		}
@@ -180,9 +190,7 @@
 				_nextBtn.addEventListener(MouseEvent.CLICK, onNextBtnClick, false, 0, true);
 				_prevBtn.addEventListener(MouseEvent.CLICK, onPrevBtnClick, false, 0, true);
 				_openListBtn.addEventListener(MouseEvent.CLICK, onOpenListBtn, false, 0, true);				
-			}
-			
-			
+			}			
 		}
 		
 		private function onPrevBtnClick(e:MouseEvent):void {			
@@ -309,6 +317,11 @@
 		
 		public function get nextBtn():IconGlowBtn {
 			return _nextBtn;
+		}
+		
+		override public function set y(value:Number):void {
+			super.y = value;
+			setLayout();
 		}
 	}	
 }

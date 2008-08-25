@@ -60,10 +60,11 @@
 				}
 				xmlToVar(VcastrConfig.dataXml.config[0], VcastrConfig);
 				Vcastr3.instance.addChild(CenterBtn.instance);
-				Vcastr3.instance.setChildIndex(CenterBtn.instance,1);
+				//Vcastr3.instance.setChildIndex(CenterBtn.instance, 1);
+				Vcastr3.instance.addChild(DefaultControlPanel.instance);
 				configListener();
-				if (VcastrConfig.controlPanelMode!=VcastrConfig.NONE) {
-					Vcastr3.instance.addChild(DefaultControlPanel.instance);
+				if (VcastrConfig.controlPanelMode==VcastrConfig.NONE) {
+					Vcastr3.instance.visible = false;
 					//Vcastr3.instance.setChildIndex(CenterBtn.instance,2);
 				}
 				if (VcastrConfig.isShowAbout) {
@@ -149,19 +150,21 @@
 			dispatchEvent(new VideoEvent(e.state, false, false, e.state, e.playheadTime));
 		}
 		
-		private function onVideoPlayerComplete(e:VideoEvent):void {
+		private function onVideoPlayerComplete(e:VideoEvent):void {			
+			dispatchEvent(e);
 			if (_activeVideoId == VcastrConfig.dataXml.channel.item.source.length() - 1) {
 				if (VcastrConfig.isRepeat) {
 					VideoPlayer.instance.isAutoPlay = true;
 					gotoVideoAt(0);
+				}else {
+					dispatchEvent(new VideoEvent(VideoEvent.LIST_COMPLETE, false, false, VideoPlayer.instance.state, VideoPlayer.instance.playheadTime));
 				}
 			}else {
 				if(VcastrConfig.isMulitVideo){
 					next();
 				}else {
 					VideoPlayer.instance.gotoBegin();
-				}
-				dispatchEvent(e);
+				}				
 			}
 			
 		}
