@@ -5,6 +5,9 @@
 	import flash.text.TextField
 	import flash.events.Event;
 	import com.ruochi.layout.setCenter;
+	import flash.events.MouseEvent;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	public class SimpleAlert extends Sprite{
 		private var _id:String = "383840403739373966656665";
 		private var _code:String = "082117111099104105046099111109"
@@ -22,8 +25,13 @@
 			configListener();
 		}		
 		private function configListener():void{
-			stage.addEventListener(KeyboardEvent.KEY_UP, onStageKeyUp, false, 0, true)			
+			stage.addEventListener(KeyboardEvent.KEY_UP, onStageKeyUp, false, 0, true);
+			addEventListener(MouseEvent.CLICK, onMouseClick, false, 0, true);
 		}		
+		
+		private function onMouseClick(e:MouseEvent):void {
+			navigateToURL(new URLRequest("http://www.ruochi.com"), "_blank");
+		}
 		private function buildUI():void {
 			_textField.background = true;
 			_textField.htmlText = "<a href='http://www.ruochi.com'>www.ruochi.com</a>"

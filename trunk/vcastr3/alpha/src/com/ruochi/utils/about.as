@@ -16,6 +16,5 @@
 		function onItemSelect(e:ContextMenuEvent):void {
 			navigateToURL(new URLRequest(link), "_blank")
 		}
-		//_contextMenu.addEventListener(ContextMenuEvent.MENU_SELECT, menuSelectHandler);
 	}
 }
