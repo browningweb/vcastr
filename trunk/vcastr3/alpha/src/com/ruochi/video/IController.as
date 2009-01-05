@@ -25,5 +25,6 @@
 		function get state():String ;
 		function get bytesLoadedPersent():Number ;
 		function get playHeadTime():int ;
+		function load(url:String):void;
 	}
 }

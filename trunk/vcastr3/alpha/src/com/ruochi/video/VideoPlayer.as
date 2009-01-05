@@ -251,7 +251,7 @@
 			_isAutoPlay = b;
 		}
 		public function set defaultVoluem(v:Number):void {
-			_soundTransform.volume = v; trace(v,'cc')
+			_soundTransform.volume = v;
 		}
 		public function set bufferTime(v:Number):void {
 			_netStream.bufferTime = v;

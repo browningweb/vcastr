@@ -129,6 +129,10 @@
 			dispatchEvent(e);
 		}
 		
+		public function load(url:String):void {
+			VideoPlayer.instance.url = url;
+		}
+		
 		private function onVideoPlayerProgress(e:VideoEvent):void {
 			if(VideoPlayer.instance.bytesLoaded>0){
 				DefaultControlPanel.instance.setProgressState(VideoPlayer.instance.bytesLoaded, VideoPlayer.instance.bytesTotal);

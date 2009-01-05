@@ -89,6 +89,10 @@
 			_controller.gotoVideoAt(id);
 		}
 		
+		private function load(url:String):void {
+			_controller.load(url);
+		}
+		
 		public function addCallBack():void {
 			if (ExternalInterface.available) {
                 try {
@@ -103,6 +107,7 @@
 					ExternalInterface.addCallback("volumeTo", volumeTo);
 					ExternalInterface.addCallback("playerSizeTo", playerSizeTo);
 					ExternalInterface.addCallback("playerMoveTo", playerMoveTo);
+					ExternalInterface.addCallback("load", load);
 					ExternalInterface.addCallback("seek", seek);
 					ExternalInterface.addCallback("gotoVideoAt", gotoVideoAt);
 				}catch (e:Error) {
